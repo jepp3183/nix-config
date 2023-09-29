@@ -1,0 +1,29 @@
+{
+    "suggest.noselect": true,
+    "suggest.labelMaxLength": 60,
+    "coc.preferences.formatOnSaveFiletypes": [
+        "python",
+            "go",
+            "rust"
+    ],
+    "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Path": "~/.local/bin/autopep8",
+    "python.formatting.autopep8Args": [
+        "--max-line-length=200"
+    ],
+    "python.typeChecking.mode": "strict",
+    "python.analysis.diagnosticMode": "workspace",
+    "languageserver": {
+        "ocaml-lsp": {
+            "command": "opam",
+            "args": ["config", "exec", "--", "ocamllsp"],
+            "filetypes": ["ocaml", "reason"]
+        },
+        "typst-lsp": {
+            "command": "typst-lsp",
+            "filetypes": ["typst"]
+        }
+    },
+    "rust-analyzer.check.command": "clippy",
+}
+
