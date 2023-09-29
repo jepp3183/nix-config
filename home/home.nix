@@ -213,10 +213,9 @@
     '';
   };
 
-  # home.file.".config/hypr/hyprland.conf".source = ./hyprland.conf;
-  home.file.".config/nvim".source = ./nvim;
-  home.file.".config/alacritty".source = ./alacritty;
-  home.file.".config/zathura/zathurarc".source = ./zathurarc;
+  home.file.".config/nvim".source = ./configs/nvim;
+  home.file.".config/alacritty".source = ./configs/alacritty;
+  home.file.".config/zathura/zathurarc".source = ./configs/zathurarc;
 
 
   xdg.mimeApps.enable = true;
