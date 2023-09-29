@@ -16,6 +16,7 @@
         "bold_italic".family = "MesloLGS NF";
         "bold_italic".style = "Bold Italic";
       };
+      window.opacity = 0.9;
     }; 
   };
 }

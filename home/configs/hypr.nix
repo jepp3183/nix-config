@@ -65,19 +65,19 @@
           workspace_swipe = true;
       };
       monitor = "eDP-1,1920x1080@60.033001,auto,1";
+
+      exec-once = [
+        "swww init"
+        "swww img ~/Pictures/wallpaper.jpg"
+        "waybar"
+        "nm-applet --indicator"
+        "dunst"
+        "[workspace special:terminal silent] alacritty"
+        "[workspace special:qalc silent] alacritty -e qalc"
+      ];
     }; 
 
     extraConfig = ''
-      exec-once = swww init
-      exec-once = swww img ~/Pictures/wallpaper.jpg
-      # exec-once = insync start
-      exec-once = waybar
-      exec-once = nm-applet --indicator
-      exec-once = dunst
-
-      exec-once = [workspace special:terminal silent] alacritty
-      exec-once = [workspace special:qalc silent] alacritty -e qalc
-
       env = XCURSOR_SIZE,24
 
       # ===========================================

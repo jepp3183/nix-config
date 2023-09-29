@@ -1,5 +1,4 @@
 {config, pkgs, ...}:
-
 {
   home.username = "jeppe";
   home.homeDirectory = "/home/jeppe";
@@ -37,26 +36,15 @@
   ];
 
   imports = [
-    .configs/hypr.nix
+    ./configs/hypr.nix
+    ./configs/fish.nix
+    ./configs/alacritty.nix
+    ./configs/zathura.nix
   ];
 
-  programs.fish = {
-    enable = true;
-    plugins = [
-      { name = "hydro-prompt"; src = pkgs.fishPlugins.hydro.src; }
-    ];
-    interactiveShellInit = ''
-      set fish_greeting
-
-      bind \ck up-or-search
-    '';
-  };
-
-
   home.file.".config/nvim".source = ./configs/nvim;
-  home.file.".config/alacritty".source = ./configs/alacritty;
-  home.file.".config/zathura/zathurarc".source = ./configs/zathurarc;
-
+  # home.file.".config/alacritty/alacritty.yml".source = ./configs/alacritty.yml;
+  # home.file.".config/zathura/zathurarc".source = ./configs/zathurarc;
 
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = {
