@@ -7,6 +7,9 @@
     ];
     shellAliases = {
       gs = "git status";
+      cat = "bat";
+      man = "batman";
+      ls = "eza";
     };
     interactiveShellInit = ''
       set fish_greeting

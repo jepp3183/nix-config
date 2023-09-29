@@ -5,7 +5,10 @@
   home.packages = with pkgs; [
     microsoft-edge
     lf
+    bat
+    bat-extras.batman
     zathura
+    sioyek
     gnome.gnome-font-viewer
     btop
     fd
