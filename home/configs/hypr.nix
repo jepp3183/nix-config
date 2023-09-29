@@ -68,7 +68,7 @@
 
       exec-once = [
         "swww init"
-        "swww img ~/Pictures/wallpaper.jpg"
+        "swww img /home/jeppe/Pictures/wallpaper.jpg"
         "waybar"
         "nm-applet --indicator"
         "dunst"
@@ -78,8 +78,6 @@
     }; 
 
     extraConfig = ''
-      env = XCURSOR_SIZE,24
-
       # ===========================================
       # BINDS
       # ===========================================
