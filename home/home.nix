@@ -4,7 +4,7 @@
   home.homeDirectory = "/home/jeppe";
   home.packages = with pkgs; [
     microsoft-edge
-    ranger
+    lf
     zathura
     gnome.gnome-font-viewer
     btop
@@ -40,11 +40,10 @@
     ./configs/fish.nix
     ./configs/alacritty.nix
     ./configs/zathura.nix
+    ./configs/lf.nix
   ];
 
   home.file.".config/nvim".source = ./configs/nvim;
-  # home.file.".config/alacritty/alacritty.yml".source = ./configs/alacritty.yml;
-  # home.file.".config/zathura/zathurarc".source = ./configs/zathurarc;
 
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = {
