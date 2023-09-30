@@ -42,6 +42,7 @@
     ./configs/kitty.nix
     ./configs/zathura.nix
     ./configs/lf.nix
+    ./configs/waybar.nix
   ];
 
   home.file.".config/nvim".source = ./configs/nvim;
