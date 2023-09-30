@@ -14,6 +14,7 @@
     qimgv
     sway-contrib.grimshot
     wl-clipboard
+    gnome.gnome-font-viewer
     
     # CMD UTILS
     fd
