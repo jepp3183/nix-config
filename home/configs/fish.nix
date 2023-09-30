@@ -15,6 +15,8 @@
       set fish_greeting
 
       bind \ck up-or-search
+
+      function ns; nix-shell --run fish -p $argv; end
     '';
   };
 }

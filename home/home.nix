@@ -12,6 +12,8 @@
     anydesk
     vlc
     qimgv
+    sway-contrib.grimshot
+    wl-clipboard
     
     # CMD UTILS
     fd
@@ -32,11 +34,6 @@
 
     # PYTHON
     (python3.withPackages(ps: with ps; [ numpy matplotlib pandas scipy ]))
-
-    # For screenshots
-    slurp
-    grim 
-    wl-clipboard
   ];
 
   imports = [

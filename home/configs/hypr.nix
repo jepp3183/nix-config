@@ -68,12 +68,12 @@
 
       exec-once = [
         "swww init"
-        "swww img /home/jeppe/Pictures/wallpaper.jpg"
         "waybar"
         "nm-applet --indicator"
         "dunst"
         "[workspace special:terminal silent] kitty"
         "[workspace special:qalc silent] kitty -e qalc"
+        "swww img /home/jeppe/Pictures/wallpaper.jpg"
       ];
     }; 
 
@@ -82,9 +82,9 @@
       # BINDS
       # ===========================================
       $mainMod = SUPER
-      bind = $mainMod, M, exit, 
 
-      bind = $mainMod+SHIFT, S, exec, reg=$(slurp); sleep 0.5; grim -g "$reg" - | wl-copy
+      bind = $mainMod, M, exit, 
+      bind = $mainMod+SHIFT, S, exec, fish -c "XDG_SCREENSHOTS_DIR=/home/jeppe/Pictures/Screenshots wl-copy < (grimshot save area)"
       bind = ALT, SPACE, exec, [float; size 1200 600; center] kitty -e ~/proj/open.sh
 
       # Testing...
