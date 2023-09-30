@@ -3,45 +3,46 @@
   home.username = "jeppe";
   home.homeDirectory = "/home/jeppe";
   home.packages = with pkgs; [
+    # GUI Packages
     microsoft-edge
-    lf
-    bat
-    bat-extras.batman
-    zathura
     sioyek
-    gnome.gnome-font-viewer
-    btop
-    fd
-    ripgrep
-    fzf
     spotify
-    nodejs_20 # Needed for neovim (coc)
-    nushell
-    eza
     obsidian
     discord
+    anydesk
+    vlc
+    qimgv
+    
+    # CMD UTILS
+    fd
+    ripgrep
+    eza
+    bat
+    bat-extras.batman
+    btop
+    fzf
+    gdu
+    lazygit
+    libqalculate
+    nodejs_20 # Needed for neovim (coc)
+    nushell
     rclone
     wireguard-tools
-    anydesk
-    lazygit
-    stow
     sage
-    gdu
-    qimgv
-    libqalculate
+
+    # PYTHON
+    (python3.withPackages(ps: with ps; [ numpy matplotlib pandas scipy ]))
 
     # For screenshots
     slurp
     grim 
     wl-clipboard
-
-    (python3.withPackages(ps: with ps; [ numpy matplotlib pandas scipy ]))
   ];
 
   imports = [
     ./configs/hypr.nix
     ./configs/fish.nix
-    ./configs/alacritty.nix
+    ./configs/kitty.nix
     ./configs/zathura.nix
     ./configs/lf.nix
   ];
@@ -50,7 +51,8 @@
 
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = {
-    "application/pdf" = "org.pwmt.zathura.desktop";
+    # "application/pdf" = "org.pwmt.zathura.desktop";
+    "application/pdf" = "sioyek.desktop";
     "image/jpeg" = "qimgv.desktop";
     "image/png" = "qimgv.desktop";
     "image/gif" = "qimgv.desktop";

@@ -1,9 +1,17 @@
+{pkgs, ...}:
 {
+  home.packages = with pkgs; [
+    lf
+    pistol # for previews
+  ];
   programs.lf = {
+
     enable = true;
 
     extraConfig = ''
       set ifs "\n"
+      set ignorecase
+      set previewer "/home/jeppe/proj/lf-preview"
 
       cmd open ''${{
         case $(xdg-mime query filetype "$f") in
@@ -32,6 +40,7 @@
 
       map gu cd ~/GDrive/SkoleShit/UNI
       map gn cd /etc/nixos
+      map <enter> open
 
       map S !fish
     

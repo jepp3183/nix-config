@@ -72,8 +72,8 @@
         "waybar"
         "nm-applet --indicator"
         "dunst"
-        "[workspace special:terminal silent] alacritty"
-        "[workspace special:qalc silent] alacritty -e qalc"
+        "[workspace special:terminal silent] kitty"
+        "[workspace special:qalc silent] kitty -e qalc"
       ];
     }; 
 
@@ -85,7 +85,7 @@
       bind = $mainMod, M, exit, 
 
       bind = $mainMod+SHIFT, S, exec, reg=$(slurp); sleep 0.5; grim -g "$reg" - | wl-copy
-      bind = ALT, SPACE, exec, [float] alacritty -e ~/proj/open.sh
+      bind = ALT, SPACE, exec, [float; size 1200 600; center] kitty -e ~/proj/open.sh
 
       # Testing...
       bind = $mainMod, O, movetoworkspace, special
@@ -94,7 +94,7 @@
       bind = $mainMod, Y, togglespecialworkspace, qalc
 
       # RUN
-      bind = $mainMod, Return, exec, alacritty
+      bind = $mainMod, Return, exec, kitty
       bind = $mainMod, B, exec, microsoft-edge
       bind = $mainMod+SHIFT, P, exec, nwg-bar
       bind = $mainMod, SPACE, exec, rofi -show drun -show-icons
