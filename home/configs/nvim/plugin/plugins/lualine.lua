@@ -1,10 +1,10 @@
-local custom_theme = require'lualine.themes.codedark'
-custom_theme.normal.c.bg = nil
-custom_theme.replace.c.bg = nil
-custom_theme.insert.c.bg = nil
+-- local custom_theme = require'lualine.themes.base16'
+-- custom_theme.normal.c.bg = nil
+-- custom_theme.replace.c.bg = nil
+-- custom_theme.insert.c.bg = nil
 require('lualine').setup {
     options = {
-        theme = custom_theme,
+        theme = 'base16',
     },
     tabline = {
       lualine_a = {'buffers'},
