@@ -8,6 +8,26 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  environment.systemPackages = with pkgs; [
+    neovim
+    kitty
+    git
+
+    (waybar.overrideAttrs (oldAttrs: {
+    mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ]; }))
+
+    dunst #notifications
+    libnotify #dunst needs this
+    networkmanagerapplet
+    rofi-wayland # Launcher
+    pavucontrol
+    brightnessctl
+    playerctl
+    nwg-bar # poweroff menu
+    swaylock
+    sddm-chili-theme
+  ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -71,6 +91,17 @@
   hardware.opengl.enable = true;
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+  services.acpid= {
+    enable = true;
+    logEvents = true;
+    lidEventCommands = ''
+    systemctl suspend
+    '';
+  };
+  security.pam.services.swaylock.text = ''
+  auth include login
+  '';
+  
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
@@ -79,37 +110,11 @@
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
-  environment.systemPackages = with pkgs; [
-    neovim
-    kitty
-    git
-
-    (waybar.overrideAttrs (oldAttrs: {
-    mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ]; }))
-
-    dunst #notifications
-    libnotify #dunst needs this
-    networkmanagerapplet
-    rofi-wayland # Launcher
-    pavucontrol
-    brightnessctl
-    playerctl
-    nwg-bar # poweroff menu
-    swaylock
-    sddm-chili-theme
-  ];
 
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" "Meslo" ]; })
   ];
 
-  services.logind = {
-    lidSwitch = "lock";
-    lidSwitchExternalPower = "lock";
-  };
-  security.pam.services.swaylock.text = ''
-  auth include login
-  '';
 
   # rtkit is optional but recommended
   security.rtkit.enable = true;

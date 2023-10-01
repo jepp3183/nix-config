@@ -58,7 +58,7 @@
           preserve_split = true; # you probably want this
           smart_split = false;
           no_gaps_when_only = 1;
-          special_scale_factor = 0.90;
+          special_scale_factor = 0.95;
       };
       master = {
           # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
