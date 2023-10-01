@@ -37,7 +37,11 @@
   # Configure keymap in X11
   services.xserver = {
     enable = true;
-    displayManager.sddm.enable = true;
+    displayManager.sddm = {
+      enable = true;
+      theme = "chili";
+    };
+    
     layout = "us";
     xkbVariant = "";
   };
@@ -85,7 +89,6 @@
 
     dunst #notifications
     libnotify #dunst needs this
-    swww #wallpaper
     networkmanagerapplet
     rofi-wayland # Launcher
     pavucontrol
@@ -93,6 +96,7 @@
     playerctl
     nwg-bar # poweroff menu
     swaylock
+    sddm-chili-theme
   ];
 
   fonts.packages = with pkgs; [

@@ -1,6 +1,7 @@
 Fix lid closing behavior
-make login page nicer
-RICE WAYBAR
-(LF image previews)
+use nix-colors for theming
 sioyek setup
+GOOGLE DRIVE
 find some way to use shell scripts! putting them in ~/proj no good enough...
+nvim is currently symlinked.... sorry
+(LF image previews)
