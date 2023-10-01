@@ -14,13 +14,12 @@ in
         layer = "top";
         position = "top";
         height = 30;
-        spacing = 4;
+        spacing = 5;
 
         modules-left = ["hyprland/workspaces" "custom/media"];
         # modules-center = ["hyprland/window"];
         modules-center = ["clock"];
-        modules-right = sep "custom/sep" ["pulseaudio" "network" "cpu" "memory" "battery" "tray"];
-        # modules-right = ["pulseaudio" "network" "cpu" "memory" "battery" "tray"];
+        modules-right = ["pulseaudio" "network" "cpu" "memory" "battery" "tray"];
 
         tray = {
             icon-size = 21;
@@ -77,13 +76,13 @@ in
             format = "{icon} {usage:2}%";
             format-icons =[(icon "")];
             tooltip = true;
-            on-click = "alacritty -e btop";
+            on-click = "kitty -e btop";
             interval = 5;
         };
         memory = {
             format = "{icon} {:2}%";
             format-icons = [(icon "")];
-            on-click = "alacritty -e btop";
+            on-click = "kitty -e btop";
             interval = 5;
         };
         battery = {
@@ -116,7 +115,7 @@ in
             format-muted = "{volume}% ${icon "󰝟"} {format_source}";
             format-bluetooth = "{volume}% {icon} {format_source}";
             format-bluetooth-muted = "󰗿 {icon} {format_source}";
-            format-source = "";
+            format-source = icon "";
             format-source-muted = icon "";
             format-icons = {
                 headphone = icon "";
@@ -145,18 +144,9 @@ in
           transition-duration: .5s;
       }
 
-      window#waybar.hidden {
-          opacity: 1.0;
-      }
-
-      /*
       window#waybar.empty {
           background-color: transparent;
       }
-      window#waybar.solo {
-          background-color: #EEEEEE;
-      }
-      */
 
       button {
           /* Use box-shadow instead of border so the text isn't offset */
@@ -169,45 +159,23 @@ in
       /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
       button:hover {
           background: inherit;
+          box-shadow: inherit;
+          text-shadow: inherit;
       }
 
       #workspaces button {
-          padding: 0 5px;
-          color: #eeeeee;
+          padding: 0 10px;
+          color: inherit;
       }
 
       #workspaces button:hover {
           background: rgba(0, 0, 0, 0.2);
       }
 
-      #workspaces button.focused {
-          background-color: #64727D;
-      }
-
-      #workspaces button.urgent {
-          background-color: #eb4d4b;
-      }
-
-      #clock,
-      #battery,
-      #cpu,
-      #memory,
-      #disk,
-      #temperature,
-      #backlight,
-      #network,
-      #pulseaudio,
-      #wireplumber,
-      #custom-media,
-      #tray,
-      #mode,
-      #idle_inhibitor,
-      #scratchpad,
-      #mpd {
-          padding: 0 10px;
-          margin: 0px;
-          color: #eeeeee;
-          border-radius: 5px;
+      #clock, #battery, #cpu, #memory, #disk, #temperature, #backlight,
+      #network, #pulseaudio, #wireplumber, #custom-media, #tray,
+      #mode, #idle_inhibitor, #scratchpad, #mpd {
+        padding: 0px 10px;
       }
 
       #custom-sep {
@@ -215,23 +183,28 @@ in
         margin: 0px -2px;
       }  
 
-     .modules-right, .modules-left, .modules-center  {
-        margin: 5px 5px;
-        padding: 0px 10px;
+     .modules-right > *, .modules-left > *, .modules-center > *  {
         color: #eeeeee;
         background-color: #353d42;
-        border-radius: 5px;
+        border-radius: 10px;
+     }
+
+     .modules-right, .modules-left, .modules-center  {
+        margin: 5px 5px;
+      }
+
+      #custom-media {
+        font-size: 14px;
       }
 
 
-      /* If workspaces is the leftmost module, omit left margin */
-      .modules-left > widget:first-child > #workspaces {
-          margin-left: 0;
+
+      #workspaces button.urgent {
+          background-color: #eb4d4b;
       }
 
-      /* If workspaces is the rightmost module, omit right margin */
-      .modules-right > widget:last-child > #workspaces {
-          margin-right: 0;
+      #network.disconnected {
+          background-color: #f53c3c;
       }
 
       @keyframes blink {
@@ -247,18 +220,6 @@ in
           animation-timing-function: linear;
           animation-iteration-count: infinite;
           animation-direction: alternate;
-      }
-
-      label:focus {
-          background-color: #000000;
-      }
-
-      #network.disconnected {
-          background-color: #f53c3c;
-      }
-
-      #custom-media {
-        font-size: 14px;
       }
 
       #tray > .needs-attention {
