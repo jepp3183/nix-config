@@ -15,28 +15,27 @@
     };
   };
 
-  outputs = {self, nixpkgs, home-manager, ...}: 
+  outputs = {self, nixpkgs, home-manager, ...}@inputs: 
+    let
+      system = "x86_64-linux";
+    in {
+    
+      nixosConfigurations = {
+        "nixos" = nixpkgs.lib.nixosSystem {
 
-  let
-    system = "x86_64-linux";
-  in {
-  
-    nixosConfigurations = {
-      "nixos" = nixpkgs.lib.nixosSystem {
+          inherit system;
 
-        inherit system;
-
-        modules = [
-          ./nixos/configuration.nix
-          
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.jeppe = import ./home/home.nix;
-          }
-          
-        ];
-      };
-    }; 
-  };
+          modules = [
+            ./nixos/configuration.nix
+            
+            home-manager.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.jeppe = import ./home/home.nix;
+            }
+            
+          ];
+        };
+      }; 
+    };
 }

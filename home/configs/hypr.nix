@@ -86,89 +86,104 @@
       ];
     }; 
 
-    extraConfig = ''
-      # ===========================================
-      # BINDS
-      # ===========================================
-      $mainMod = SUPER
+    extraConfig = 
+    let 
+      file_opener = pkgs.writeShellScriptBin "open.sh" ''
+        cd ~
+        file=$(${pkgs.fzf}/bin/fzf)
+        type=$(${pkgs.file}/bin/file -Lb --mime-type "$file")
 
-      bind = $mainMod, M, exit, 
-      bind = $mainMod+SHIFT, S, exec, fish -c "XDG_SCREENSHOTS_DIR=/home/jeppe/Pictures/Screenshots wl-copy < (grimshot save area)"
-      bind = ALT, SPACE, exec, [float; size 1200 600; center] kitty -e ~/proj/open.sh
+        if [[ $type =~ ^text ]]; then
+            nohup ${pkgs.kitty}/bin/kitty -e nvim "$file" >/dev/null 2>&1  &
+        else
+            nohup xdg-open "$file" >/dev/null 2>&1 &
+        fi
+        sleep 0.01
+      '';
+    in
+      ''
+        # ===========================================
+        # BINDS
+        # ===========================================
+        $mainMod = SUPER
 
-      # Testing...
-      bind = $mainMod, O, movetoworkspace, special
-      bind = $mainMod, P, togglespecialworkspace, 
-      bind = $mainMod, U, togglespecialworkspace, terminal
-      bind = $mainMod, Y, togglespecialworkspace, qalc
+        bind = $mainMod, M, exit, 
+        bind = $mainMod+SHIFT, S, exec, fish -c "XDG_SCREENSHOTS_DIR=/home/jeppe/Pictures/Screenshots wl-copy < (grimshot save area)"
+        bind = ALT, SPACE, exec, [float; size 1200 600; center] kitty -e ${file_opener}/bin/open.sh
 
-      # RUN
-      bind = $mainMod, Return, exec, kitty
-      bind = $mainMod, B, exec, microsoft-edge
-      bind = $mainMod+SHIFT, P, exec, nwg-bar
-      bind = $mainMod, SPACE, exec, rofi -show drun -show-icons
-      
-      # Brightness + Volume
-      bind = , XF86MonBrightnessDown, exec, brightnessctl s 10%-
-      bind = , XF86MonBrightnessUp, exec, brightnessctl s +10%
-      bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-      bind = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1.5
-      bind = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5
-      bind = , XF86AudioPlay, exec, playerctl play-pause
-      bind = , XF86AudioPrev, exec, playerctl previous
-      bind = , XF86AudioNext, exec, playerctl next
+        # Testing...
+        bind = $mainMod, O, movetoworkspace, special
+        bind = $mainMod, P, togglespecialworkspace, 
+        bind = $mainMod, U, togglespecialworkspace, terminal
+        bind = $mainMod, Y, togglespecialworkspace, qalc
 
-      # OTHER WINDOW CONTROLS
-      bind = $mainMod, F, fullscreen, 0
-      bind = $mainMod, Q, killactive, 
-      bind = $mainMod+SHIFT, F, togglefloating, 
-      bind = $mainMod, T, togglesplit, # dwindle
+        # RUN
+        bind = $mainMod, Return, exec, kitty
+        bind = $mainMod, B, exec, microsoft-edge
+        bind = $mainMod+SHIFT, P, exec, nwg-bar
+        bind = $mainMod, SPACE, exec, rofi -show drun -show-icons
+        
+        # Brightness + Volume
+        bind = , XF86MonBrightnessDown, exec, brightnessctl s 10%-
+        bind = , XF86MonBrightnessUp, exec, brightnessctl s +10%
+        bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+        bind = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1.5
+        bind = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5
+        bind = , XF86AudioPlay, exec, playerctl play-pause
+        bind = , XF86AudioPrev, exec, playerctl previous
+        bind = , XF86AudioNext, exec, playerctl next
 
-      # RESIZE WINDOW
-      bind = $mainMod, left, resizeactive, -50 0
-      bind = $mainMod, right, resizeactive, 50 0
-      bind = $mainMod, up, resizeactive, 0 -50
-      bind = $mainMod, down, resizeactive, 0 50
+        # OTHER WINDOW CONTROLS
+        bind = $mainMod, F, fullscreen, 0
+        bind = $mainMod, Q, killactive, 
+        bind = $mainMod+SHIFT, F, togglefloating, 
+        bind = $mainMod, T, togglesplit, # dwindle
 
-      # MOVE FOCUS
-      bind = $mainMod, H, movefocus, l
-      bind = $mainMod, L, movefocus, r
-      bind = $mainMod, K, movefocus, u
-      bind = $mainMod, J, movefocus, d
+        # RESIZE WINDOW
+        bind = $mainMod, left, resizeactive, -50 0
+        bind = $mainMod, right, resizeactive, 50 0
+        bind = $mainMod, up, resizeactive, 0 -50
+        bind = $mainMod, down, resizeactive, 0 50
 
-      # MOVE WINDOWS
-      bind = $mainMod+SHIFT, H, movewindow, l
-      bind = $mainMod+SHIFT, L, movewindow, r
-      bind = $mainMod+SHIFT, K, movewindow, u
-      bind = $mainMod+SHIFT, J, movewindow, d
+        # MOVE FOCUS
+        bind = $mainMod, H, movefocus, l
+        bind = $mainMod, L, movefocus, r
+        bind = $mainMod, K, movefocus, u
+        bind = $mainMod, J, movefocus, d
 
-      # Move/resize windows with mainMod + LMB/RMB and dragging
-      bindm = $mainMod, mouse:272, movewindow
-      bindm = $mainMod, mouse:273, resizewindow
+        # MOVE WINDOWS
+        bind = $mainMod+SHIFT, H, movewindow, l
+        bind = $mainMod+SHIFT, L, movewindow, r
+        bind = $mainMod+SHIFT, K, movewindow, u
+        bind = $mainMod+SHIFT, J, movewindow, d
 
-      # Switch workspaces with mainMod + [0-9]
-      bind = $mainMod, 1, workspace, 1
-      bind = $mainMod, 2, workspace, 2
-      bind = $mainMod, 3, workspace, 3
-      bind = $mainMod, 4, workspace, 4
-      bind = $mainMod, 5, workspace, 5
-      bind = $mainMod, 6, workspace, 6
-      bind = $mainMod, 7, workspace, 7
-      bind = $mainMod, 8, workspace, 8
-      bind = $mainMod, 9, workspace, 9
-      bind = $mainMod, 0, workspace, 10
+        # Move/resize windows with mainMod + LMB/RMB and dragging
+        bindm = $mainMod, mouse:272, movewindow
+        bindm = $mainMod, mouse:273, resizewindow
 
-      # Move active window to a workspace with mainMod + SHIFT + [0-9]
-      bind = $mainMod SHIFT, 1, movetoworkspacesilent, 1
-      bind = $mainMod SHIFT, 2, movetoworkspacesilent, 2
-      bind = $mainMod SHIFT, 3, movetoworkspacesilent, 3
-      bind = $mainMod SHIFT, 4, movetoworkspacesilent, 4
-      bind = $mainMod SHIFT, 5, movetoworkspacesilent, 5
-      bind = $mainMod SHIFT, 6, movetoworkspacesilent, 6
-      bind = $mainMod SHIFT, 7, movetoworkspacesilent, 7
-      bind = $mainMod SHIFT, 8, movetoworkspacesilent, 8
-      bind = $mainMod SHIFT, 9, movetoworkspacesilent, 9
-      bind = $mainMod SHIFT, 0, movetoworkspacesilent, 10
-    '';
+        # Switch workspaces with mainMod + [0-9]
+        bind = $mainMod, 1, workspace, 1
+        bind = $mainMod, 2, workspace, 2
+        bind = $mainMod, 3, workspace, 3
+        bind = $mainMod, 4, workspace, 4
+        bind = $mainMod, 5, workspace, 5
+        bind = $mainMod, 6, workspace, 6
+        bind = $mainMod, 7, workspace, 7
+        bind = $mainMod, 8, workspace, 8
+        bind = $mainMod, 9, workspace, 9
+        bind = $mainMod, 0, workspace, 10
+
+        # Move active window to a workspace with mainMod + SHIFT + [0-9]
+        bind = $mainMod SHIFT, 1, movetoworkspacesilent, 1
+        bind = $mainMod SHIFT, 2, movetoworkspacesilent, 2
+        bind = $mainMod SHIFT, 3, movetoworkspacesilent, 3
+        bind = $mainMod SHIFT, 4, movetoworkspacesilent, 4
+        bind = $mainMod SHIFT, 5, movetoworkspacesilent, 5
+        bind = $mainMod SHIFT, 6, movetoworkspacesilent, 6
+        bind = $mainMod SHIFT, 7, movetoworkspacesilent, 7
+        bind = $mainMod SHIFT, 8, movetoworkspacesilent, 8
+        bind = $mainMod SHIFT, 9, movetoworkspacesilent, 9
+        bind = $mainMod SHIFT, 0, movetoworkspacesilent, 10
+      '';
   };
 }
