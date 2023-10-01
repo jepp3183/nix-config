@@ -184,8 +184,8 @@ in
       }  
 
      .modules-right > *, .modules-left > *, .modules-center > *  {
-        color: #eeeeee;
-        background-color: #353d42;
+        color: #202A30;
+        background-color: #5ABAF2;
         border-radius: 10px;
      }
 
@@ -209,7 +209,7 @@ in
 
       @keyframes blink {
           to {
-              color: #eeeeee;
+              color: #202A30;
           }
       }
 
