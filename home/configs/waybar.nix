@@ -1,3 +1,10 @@
+{pkgs,...}:
+
+let
+    icon = i: "<span size='x-large' rise='-1800'>${i}</span>";
+    sep = sep: list: 
+      pkgs.lib.strings.splitString "." (builtins.concatStringsSep ".${sep}." list);
+in
 {
   programs.waybar = {
     enable = true;
@@ -10,12 +17,17 @@
         spacing = 4;
 
         modules-left = ["hyprland/workspaces" "custom/media"];
-        modules-center = ["hyprland/window"];
-        modules-right = ["pulseaudio" "network" "cpu" "memory" "battery" "clock" "tray"];
+        # modules-center = ["hyprland/window"];
+        modules-center = ["clock"];
+        modules-right = sep "custom/sep" ["pulseaudio" "network" "cpu" "memory" "battery" "tray"];
+        # modules-right = ["pulseaudio" "network" "cpu" "memory" "battery" "tray"];
 
         tray = {
             icon-size = 21;
             spacing = 10;
+        };
+        "custom/sep" = {
+          format = " ";
         };
         "custom/media" = {
             exec = ''playerctl metadata \
@@ -26,10 +38,7 @@
             '';
             format = "{}";
             interval = 1;
-            max-length = 25;
-        };
-        "hyprland/window" = {
-            max-length = 60;
+            max-length = 35;
         };
         "hyprland/workspaces" = {
             format-icons = {
@@ -48,60 +57,75 @@
             format = "{icon}";
         };
         clock = {
-            tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-            format-alt = "{:%Y-%m-%d}";
+        format = "{:${icon ""} %A,%e.%B ${icon "󰥔"} %R}";
+        tooltip-format = "<tt><small>{calendar}</small></tt>";
+        calendar = {
+            mode = "year";
+            mode-mon-col = 3;
+            weeks-pos = "right";
+            on-scroll = 1;
+            format = {
+              months = "<span color='#ffead3'><b>{}</b></span>";
+              days = "<span color='#ffffff'><b>{}</b></span>";
+              weeks = "<span color='#99ffdd'><b>{}</b></span>";
+              weekdays = "<span color='#ffcc66'><b>{}</b></span>";
+              today = "<span color='#ff6699'><b><u>{}</u></b></span>";
+            };
+        };
         };
         cpu = {
-            format = " {usage}%";
+            format = "{icon} {usage:2}%";
+            format-icons =[(icon "")];
             tooltip = true;
             on-click = "alacritty -e btop";
             interval = 5;
         };
         memory = {
-            format = " {}%";
+            format = "{icon} {:2}%";
+            format-icons = [(icon "")];
             on-click = "alacritty -e btop";
             interval = 5;
         };
-        backlight = {
-            format = "{percent}% {icon}";
-            format-icons = ["" "" "" "" "" "" "" "" ""];
-        };
         battery = {
             states = {
-                good = 95;
+                good = 80;
                 warning = 30;
                 critical = 15;
             };
+            interval = 30;
             format = "{capacity}% {icon}";
-            format-charging = "{capacity}% ";
+            format-charging = "{capacity}% 󰂄";
             format-plugged = "{capacity}% ";
             format-alt = "{time} {icon}";
-            format-icons = ["" "" "" "" ""];
+            format-icons = map (x: (icon x)) ["" "" "" "" ""];
         };
         network = {
-            format-wifi = "{bandwidthUpBytes} ⇅ {bandwidthDownBytes}";
-            format-ethernet = "{ipaddr}/{cidr} ";
-            tooltip-format = "{ifname} via {gwaddr} ";
-            format-linked = "{ifname} (No IP) ";
+            format-wifi = "{bandwidthUpBytes} {icon} {bandwidthDownBytes}";
+            format-icons = [(icon "⇅")];
+            format-ethernet = "{ipaddr}/{cidr}";
+            tooltip-format = "{ifname} via {gwaddr}";
+            format-linked = "{ifname} (No IP)";
             format-disconnected = "Disconnected ⚠";
             format-alt = "{ifname} = {ipaddr}/{cidr}";
             interval = 5;
+            max-length = 20;
+            min-length = 20;
         };
         pulseaudio = {
             format = "{volume}% {icon} {format_source}";
+            format-muted = "{volume}% ${icon "󰝟"} {format_source}";
             format-bluetooth = "{volume}% {icon} {format_source}";
-            format-bluetooth-muted = " {icon} {format_source}";
-            format-muted = " {format_source}";
+            format-bluetooth-muted = "󰗿 {icon} {format_source}";
             format-source = "";
-            format-source-muted = "";
+            format-source-muted = icon "";
             format-icons = {
-                headphone = "";
-                hands-free = "";
-                headset = "";
-                phone = "";
-                portable = "";
-                car = "";
-                default = ["" "" ""];
+                headphone = icon "";
+                hands-free = icon "";
+                headset = icon "";
+                phone = icon "";
+                portable = icon "";
+                car = icon "";
+                default = map (x: (icon x)) ["" "" ""];
             };
             on-click = "pavucontrol";
         };
@@ -109,16 +133,14 @@
     };
 
     style = ''
-          * {
-          font-family: FiraCode Nerd Font;
+      * {
+          font-family: FiraCode Nerd Font Mono;
           font-weight: 500;
           font-size: 16px;
       }
 
       window#waybar {
-          background-color: rgba(43, 48, 59, 1.0);
-          /* border-bottom: 3px solid rgba(100, 114, 125, 0.5); */
-          color: #ffffff;
+          background-color: rgba(16, 22, 26, 1.0);
           transition-property: background-color;
           transition-duration: .5s;
       }
@@ -132,18 +154,9 @@
           background-color: transparent;
       }
       window#waybar.solo {
-          background-color: #FFFFFF;
+          background-color: #EEEEEE;
       }
       */
-
-      window#waybar.termite {
-          background-color: #3F3F3F;
-      }
-
-      window#waybar.chromium {
-          background-color: #000000;
-          border: none;
-      }
 
       button {
           /* Use box-shadow instead of border so the text isn't offset */
@@ -156,13 +169,11 @@
       /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
       button:hover {
           background: inherit;
-          box-shadow: inset 0 -3px #ffffff;
       }
 
       #workspaces button {
           padding: 0 5px;
-          background-color: transparent;
-          color: #ffffff;
+          color: #eeeeee;
       }
 
       #workspaces button:hover {
@@ -171,16 +182,10 @@
 
       #workspaces button.focused {
           background-color: #64727D;
-          box-shadow: inset 0 -3px #ffffff;
       }
 
       #workspaces button.urgent {
           background-color: #eb4d4b;
-      }
-
-      #mode {
-          background-color: #64727D;
-          border-bottom: 3px solid #ffffff;
       }
 
       #clock,
@@ -200,14 +205,24 @@
       #scratchpad,
       #mpd {
           padding: 0 10px;
-          border-radius: 20px;
+          margin: 0px;
           color: #eeeeee;
+          border-radius: 5px;
       }
 
-      #window,
-      #workspaces {
-          margin: 0 4px;
+      #custom-sep {
+        background-color: rgba(16, 22, 26, 1.0);
+        margin: 0px -2px;
+      }  
+
+     .modules-right, .modules-left, .modules-center  {
+        margin: 5px 5px;
+        padding: 0px 10px;
+        color: #eeeeee;
+        background-color: #353d42;
+        border-radius: 5px;
       }
+
 
       /* If workspaces is the leftmost module, omit left margin */
       .modules-left > widget:first-child > #workspaces {
@@ -221,14 +236,12 @@
 
       @keyframes blink {
           to {
-              background-color: #ffffff;
-              color: #000000;
+              color: #eeeeee;
           }
       }
 
       #battery.critical:not(.charging) {
-          background-color: #f53c3c;
-          color: #ffffff;
+          color: #f53c3c;
           animation-name: blink;
           animation-duration: 0.5s;
           animation-timing-function: linear;
@@ -244,13 +257,8 @@
           background-color: #f53c3c;
       }
 
-      #pulseaudio.muted {
-          background-color: #90b1b1;
-          color: #2a5c45;
-      }
-
       #custom-media {
-        font-size: 13px;
+        font-size: 14px;
       }
 
       #tray > .needs-attention {

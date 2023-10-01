@@ -46,7 +46,7 @@
     ./configs/waybar.nix
   ];
 
-  home.file.".config/nvim".source = ./configs/nvim;
+  # home.file.".config/nvim".source = ./configs/nvim;
 
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = {

@@ -1,4 +1,9 @@
+{pkgs,...}:
 {
+  home.packages = with pkgs; [
+   swaybg
+  ];
+
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -16,18 +21,19 @@
       };
       general = {
           gaps_in = 3;
-          gaps_out = 2;
+          gaps_out = 3;
           border_size = 2;
-          "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-          "col.inactive_border" = "rgba(595959aa)";
+          "col.active_border" = "rgba(33ccff99) rgba(00ff9999) 45deg";
+          "col.inactive_border" = "rgba(59595900)";
           layout = "dwindle";
       };
       decoration = {
           rounding = 5;
           blur = {
               enabled = true;
-              size = 3;
-              passes = 1;
+              size = 8;
+              passes = 2;
+              ignore_opacity = true;
           };
           drop_shadow = true;
           shadow_range = 4;
@@ -67,13 +73,16 @@
       monitor = "eDP-1,1920x1080@60.033001,auto,1";
 
       exec-once = [
-        "swww init"
         "waybar"
         "nm-applet --indicator"
         "dunst"
         "[workspace special:terminal silent] kitty"
         "[workspace special:qalc silent] kitty -e qalc"
-        "swww img /home/jeppe/Pictures/wallpaper.jpg"
+        "swaybg -i Pictures/5rVFQla.jpeg"
+      ];
+      exec = [];
+      windowrule = [
+        "opacity 0.8,(kitty)"
       ];
     }; 
 
@@ -102,6 +111,7 @@
       # Brightness + Volume
       bind = , XF86MonBrightnessDown, exec, brightnessctl s 10%-
       bind = , XF86MonBrightnessUp, exec, brightnessctl s +10%
+      bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
       bind = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1.5
       bind = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5
       bind = , XF86AudioPlay, exec, playerctl play-pause
