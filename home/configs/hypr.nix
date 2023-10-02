@@ -119,6 +119,9 @@
         bind = $mainMod, B, exec, microsoft-edge
         bind = $mainMod+SHIFT, P, exec, nwg-bar
         bind = $mainMod, SPACE, exec, rofi -show drun -show-icons
+
+        # LID CLOSE
+        bindl = ,switch:Lid Switch, exec, ${pkgs.swaylock}/bin/swaylock -i /home/jeppe/Pictures/5rVFQla.jpeg 
         
         # Brightness + Volume
         bind = , XF86MonBrightnessDown, exec, brightnessctl s 10%-

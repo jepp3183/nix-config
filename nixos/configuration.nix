@@ -94,9 +94,6 @@
   services.acpid= {
     enable = true;
     logEvents = true;
-    lidEventCommands = ''
-    systemctl suspend
-    '';
   };
   security.pam.services.swaylock.text = ''
   auth include login
