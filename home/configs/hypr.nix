@@ -6,6 +6,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
+    xwayland.enable = true;
     settings = {
       input = {
           kb_layout = "us,dk";

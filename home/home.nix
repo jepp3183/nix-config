@@ -44,6 +44,7 @@
     ./configs/zathura.nix
     ./configs/lf.nix
     ./configs/waybar.nix
+    ./configs/sioyek.nix
   ];
 
   # home.file.".config/nvim".source = ./configs/nvim;
