@@ -5,16 +5,13 @@
   home.packages = with pkgs; [
     # GUI Packages
     microsoft-edge
-    sioyek
     spotify
     obsidian
     discord
     anydesk
     vlc
     qimgv
-    sway-contrib.grimshot
     wl-clipboard
-    gnome.gnome-font-viewer
     
     # CMD UTILS
     fd

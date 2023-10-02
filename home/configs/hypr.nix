@@ -1,8 +1,7 @@
 {pkgs,...}:
 {
-  home.packages = with pkgs; [
-   swaybg
-  ];
+  # home.packages = with pkgs; [
+  # ];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -10,9 +9,6 @@
     settings = {
       input = {
           kb_layout = "us,dk";
-          # kb_variant =
-          # kb_model =
-          # kb_rules =
           kb_options = "ctrl:nocaps,grp:alt_shift_toggle";
           follow_mouse = 1;
           touchpad.natural_scroll = true;
@@ -79,7 +75,7 @@
         "dunst"
         "[workspace special:terminal silent] kitty"
         "[workspace special:qalc silent] kitty -e qalc"
-        "swaybg -i Pictures/5rVFQla.jpeg"
+        "${pkgs.swaybg}/bin/swaybg -i Pictures/5rVFQla.jpeg"
       ];
       exec = [];
       windowrule = [
@@ -109,8 +105,8 @@
         $mainMod = SUPER
 
         bind = $mainMod, M, exit, 
-        bind = $mainMod+SHIFT, S, exec, fish -c "XDG_SCREENSHOTS_DIR=/home/jeppe/Pictures/Screenshots wl-copy < (grimshot save area)"
-        bind = ALT, SPACE, exec, [float; size 1200 600; center] kitty -e ${file_opener}/bin/open.sh
+        bind = $mainMod+SHIFT, S, exec, ${pkgs.fish}/bin/fish -c "XDG_SCREENSHOTS_DIR=/home/jeppe/Pictures/Screenshots ${pkgs.imagemagick}/bin/convert - -shave 1x1 PNG:- < (${pkgs.sway-contrib.grimshot}/bin/grimshot save area) | wl-copy"
+        bind = ALT, SPACE, exec, [float; size 1200 600; center] ${pkgs.kitty}/bin/kitty -e ${file_opener}/bin/open.sh
 
         # Testing...
         bind = $mainMod, O, movetoworkspace, special
@@ -128,6 +124,7 @@
         bind = , XF86MonBrightnessDown, exec, brightnessctl s 10%-
         bind = , XF86MonBrightnessUp, exec, brightnessctl s +10%
         bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+        bind = , XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
         bind = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1.5
         bind = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5
         bind = , XF86AudioPlay, exec, playerctl play-pause
