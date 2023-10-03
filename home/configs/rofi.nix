@@ -31,7 +31,7 @@ let
         selected:       #81A1C1FF;
         active:         #A3BE8CFF;
         urgent:         #BF616AFF;
-        font: "FiraCode Nerd Font Mono";
+        font: "FiraCode Nerd Font Mono 12";
         border-colour:               var(selected);
         handle-colour:               var(selected);
         background-colour:           var(background);
@@ -64,7 +64,8 @@ let
         location:                    center;
         anchor:                      center;
         fullscreen:                  false;
-        width:                       800px;
+        width:                       63%;
+        height:                      50%;
         x-offset:                    0px;
         y-offset:                    0px;
 

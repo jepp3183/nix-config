@@ -87,7 +87,7 @@
     let 
       file_opener = pkgs.writeShellScriptBin "open.sh" ''
         cd ~
-        file=$(${pkgs.fd}/bin/fd -tl -tf -a . ~ | ${pkgs.rofi}/bin/rofi -dmenu -matching fuzzy -i -sort -sorting-method fzf)
+        file=$(${pkgs.fd}/bin/fd -tl -tf -a . ~ | ${pkgs.rofi}/bin/rofi  -dmenu -matching fuzzy -i -sort -sorting-method fzf)
         type=$(${pkgs.file}/bin/file -Lb --mime-type "$file")
 
         if [[ $type =~ ^text ]]; then
@@ -96,6 +96,10 @@
             nohup xdg-open "$file" >/dev/null 2>&1 &
         fi
         sleep 0.01
+      '';
+
+      launcher = pkgs.writeShellScriptBin "launcher.sh" ''
+        ${pkgs.rofi}/bin/rofi -theme-str "window {width:30%;}" -show drun -modes "drun,run" -show-icons 
       '';
     in
       ''
@@ -106,7 +110,6 @@
 
         bind = $mainMod, M, exit, 
         bind = $mainMod+SHIFT, S, exec, ${pkgs.fish}/bin/fish -c "XDG_SCREENSHOTS_DIR=/home/jeppe/Pictures/Screenshots ${pkgs.imagemagick}/bin/convert - -shave 1x1 PNG:- < (${pkgs.sway-contrib.grimshot}/bin/grimshot save area) | wl-copy"
-        #bind = ALT, SPACE, exec, [float; size 1200 600; center] ${pkgs.kitty}/bin/kitty -e ${file_opener}/bin/open.sh
         bind = ALT, SPACE, exec, ${file_opener}/bin/open.sh
 
         # Testing...
@@ -119,7 +122,7 @@
         bind = $mainMod, Return, exec, kitty
         bind = $mainMod, B, exec, microsoft-edge
         bind = $mainMod+SHIFT, P, exec, nwg-bar
-        bind = $mainMod, SPACE, exec, ${pkgs.rofi}/bin/rofi -show drun -show-icons
+        bind = $mainMod, SPACE, exec, ${launcher}/bin/launcher.sh
 
         # LID CLOSE
         bindl = ,switch:Lid Switch, exec, ${pkgs.swaylock}/bin/swaylock -i /home/jeppe/Pictures/5rVFQla.jpeg 
