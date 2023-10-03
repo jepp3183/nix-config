@@ -204,7 +204,7 @@ in
       }
 
       #network.disconnected {
-          background-color: #f53c3c;
+          color: #f53c3c;
       }
 
       @keyframes blink {

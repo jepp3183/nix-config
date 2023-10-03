@@ -19,7 +19,6 @@
     dunst #notifications
     libnotify #dunst needs this
     networkmanagerapplet
-    rofi-wayland # Launcher
     pavucontrol
     brightnessctl
     playerctl

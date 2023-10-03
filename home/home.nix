@@ -29,6 +29,7 @@
     rclone
     wireguard-tools
     sage
+    rofi
 
     # PYTHON
     (python3.withPackages(ps: with ps; [ numpy matplotlib pandas scipy ]))
@@ -42,6 +43,7 @@
     ./configs/lf.nix
     ./configs/waybar.nix
     ./configs/sioyek.nix
+    ./configs/rofi.nix
   ];
 
   # home.file.".config/nvim".source = ./configs/nvim;
