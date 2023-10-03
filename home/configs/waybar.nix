@@ -29,7 +29,7 @@ in
           format = " ";
         };
         "custom/media" = {
-            exec = ''playerctl metadata \
+            exec = ''playerctl metadata 2> /dev/null \
             | grep ':artist\|:title' \
             | awk '{$1="";$2="";print $0}' \
             | tr '\n' '-' \

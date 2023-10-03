@@ -104,9 +104,9 @@
 
       power_menu = pkgs.writeShellScriptBin "power_menu.sh" ''
         choice=$(printf ' Shutdown\n󰤄 Suspend\n Lock'\
-          | ${pkgs.rofi}/bin/rofi -dmenu -i -matching fuzzy -sorting-method fzf -theme-str "window {width:20%; height:25%;}"
-        )
-
+                  | rofi -dmenu -i -matching fuzzy -sorting-method fzf -theme-str "window {width:20%; height:25%;}"\
+                  | awk '{print $2}'
+                )
         case $choice in
             Shutdown)
                 systemctl poweroff
