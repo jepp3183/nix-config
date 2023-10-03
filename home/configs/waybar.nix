@@ -164,7 +164,7 @@ in
       }
 
       #workspaces button {
-          padding: 0 10px;
+          padding: 0 7px;
           color: inherit;
       }
 
