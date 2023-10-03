@@ -22,7 +22,6 @@
     pavucontrol
     brightnessctl
     playerctl
-    nwg-bar # poweroff menu
     swaylock
     sddm-chili-theme
   ];

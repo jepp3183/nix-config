@@ -101,6 +101,24 @@
       launcher = pkgs.writeShellScriptBin "launcher.sh" ''
         ${pkgs.rofi}/bin/rofi -theme-str "window {width:30%;}" -show drun -modes "drun,run" -show-icons 
       '';
+
+      power_menu = pkgs.writeShellScriptBin "power_menu.sh" ''
+        choice=$(printf ' Shutdown\n󰤄 Suspend\n Lock'\
+          | ${pkgs.rofi}/bin/rofi -dmenu -i -matching fuzzy -sorting-method fzf -theme-str "window {width:20%; height:25%;}"
+        )
+
+        case $choice in
+            Shutdown)
+                systemctl poweroff
+                ;;
+            Suspend)
+                systemctl suspend
+                ;;
+            Lock)
+                swaylock -i /home/jeppe/Pictures/5rVFQla.jpeg
+                ;;
+        esac
+      '';
     in
       ''
         # ===========================================
@@ -121,7 +139,7 @@
         # RUN
         bind = $mainMod, Return, exec, kitty
         bind = $mainMod, B, exec, microsoft-edge
-        bind = $mainMod+SHIFT, P, exec, nwg-bar
+        bind = $mainMod+SHIFT, P, exec, ${power_menu}/bin/power_menu.sh
         bind = $mainMod, SPACE, exec, ${launcher}/bin/launcher.sh
 
         # LID CLOSE
