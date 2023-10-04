@@ -13,9 +13,11 @@
       url = "github:hyprwm/hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
-  outputs = {self, nixpkgs, home-manager, ...}@inputs: 
+  outputs = {self, nixpkgs, home-manager, ...} @ inputs: 
     let
       system = "x86_64-linux";
     in {
@@ -24,11 +26,11 @@
         "nixos" = nixpkgs.lib.nixosSystem {
 
           inherit system;
-
           modules = [
             ./nixos/configuration.nix
             
             home-manager.nixosModules.home-manager {
+              home-manager.extraSpecialArgs = {inherit inputs;};
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.jeppe = import ./home/home.nix;

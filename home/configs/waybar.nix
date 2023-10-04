@@ -1,4 +1,4 @@
-{pkgs,...}:
+{pkgs,config,...}:
 
 let
     icon = i: "<span size='x-large' rise='-1800'>${i}</span>";
@@ -131,7 +131,7 @@ in
       }; 
     };
 
-    style = ''
+    style = with config.colorScheme.colors; ''
       * {
           font-family: FiraCode Nerd Font Mono;
           font-weight: 500;
@@ -139,7 +139,7 @@ in
       }
 
       window#waybar {
-          background-color: rgba(16, 22, 26, 1.0);
+          background-color: #${base00};
           transition-property: background-color;
           transition-duration: .5s;
       }
@@ -169,7 +169,8 @@ in
       }
 
       #workspaces button:hover {
-          background: rgba(0, 0, 0, 0.2);
+        background: #${base05};
+        border-radius: 10px;
       }
 
       #clock, #battery, #cpu, #memory, #disk, #temperature, #backlight,
@@ -184,8 +185,8 @@ in
       }  
 
      .modules-right > *, .modules-left > *, .modules-center > *  {
-        color: #202A30;
-        background-color: #5ABAF2;
+        color: #${base01};
+        background-color: #${base0D};
         border-radius: 10px;
      }
 
@@ -209,7 +210,7 @@ in
 
       @keyframes blink {
           to {
-              color: #202A30;
+              color: #${base01};
           }
       }
 

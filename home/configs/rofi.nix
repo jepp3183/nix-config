@@ -1,6 +1,6 @@
-{pkgs, ...}:
+{pkgs, config, ...}:
 let
-  themeFile = pkgs.writeText "rofi-theme.rasi" 
+  themeFile = with config.colorScheme.colors; pkgs.writeText "rofi-theme.rasi" 
   ''
     /**
      *
@@ -25,12 +25,12 @@ let
 
     /*****----- Global Properties -----*****/
     * {
-        background:     #2E3440FF;
-        background-alt: #383E4AFF;
-        foreground:     #E5E9F0FF;
-        selected:       #81A1C1FF;
-        active:         #A3BE8CFF;
-        urgent:         #BF616AFF;
+        background:     #${base00}FF;
+        background-alt: #${base01};
+        foreground:     #${base05}FF;
+        selected:       #${base0D}FF;
+        active:         #${base0B}FF;
+        urgent:         #${base0F}FF;
         font: "FiraCode Nerd Font Mono 12";
         border-colour:               var(selected);
         handle-colour:               var(selected);

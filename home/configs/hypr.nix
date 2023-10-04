@@ -1,8 +1,5 @@
-{pkgs,...}:
+{pkgs, config,...}:
 {
-  # home.packages = with pkgs; [
-  # ];
-
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -16,12 +13,12 @@
           repeat_delay = 500;
           repeat_rate = 30;
       };
-      general = {
+      general = with config.colorScheme.colors; {
           gaps_in = 3;
           gaps_out = 3;
           border_size = 2;
-          "col.active_border" = "rgba(33ccff99) rgba(00ff9999) 45deg";
-          "col.inactive_border" = "rgba(59595900)";
+          "col.active_border" = "rgba(${base09}99) rgba(${base08}99) 45deg";
+          "col.inactive_border" = "rgba(${base01}99)";
           layout = "dwindle";
       };
       decoration = {
@@ -50,7 +47,6 @@
            ];
       };
       dwindle = {
-          # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
           pseudotile = true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
           preserve_split = true; # you probably want this
           smart_split = false;
@@ -58,13 +54,11 @@
           special_scale_factor = 0.95;
       };
       master = {
-          # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
           new_is_master = false;
           orientation = "left";
           no_gaps_when_only = 1;
       };
       gestures = {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
           workspace_swipe = true;
       };
       monitor = "eDP-1,1920x1080@60.033001,auto,1";
