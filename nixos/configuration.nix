@@ -84,7 +84,7 @@
     NIXOS_OZONE_WL = "1";
   };
 
-  environment.variables.EDITOR = "nvim";
+  # environment.variables.EDITOR = "nvim";
 
   hardware.opengl.enable = true;
   hardware.bluetooth.enable = true;

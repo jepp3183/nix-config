@@ -47,7 +47,7 @@
           h=$3
           x=$4
           y=$5
-          type="$(${pkgs.file}/bin/file -Lb --mime-type "$file")"
+          type="$(xdg-mime query filetype "$file")"
           
           if [[ $type =~ ^image ]]; then
               ${pkgs.kitty}/bin/kitty +kitten icat --silent --stdin no --transfer-mode file --place "''${w}x''${h}@''${x}x''${y}" "$file" < /dev/null > /dev/tty
