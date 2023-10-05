@@ -55,7 +55,7 @@
     "image/gif" = "qimgv.desktop";
   };
 
-  colorScheme = inputs.nix-colors.colorSchemes.gruvbox-material-dark-hard;
+  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-mocha;
 
   programs.git = {
     enable = true;
