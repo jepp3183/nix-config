@@ -7,6 +7,11 @@ in
   programs.neovim = {
    enable = true;  
    defaultEditor = true;
+   withNodeJs = true;
+   coc = {
+    enable = true;
+    settings = builtins.readFile ./coc-settings.json; 
+   };
    extraLuaConfig = ''
     vim.opt.number = true
     vim.opt.cursorline = true
@@ -25,6 +30,10 @@ in
     vim.opt.scrolloff = 8
     vim.opt.mouse = "a"
 
+    -- For which-key:
+    vim.o.timeout = true
+    vim.o.timeoutlen = 300
+
     ${builtins.readFile ./mappings.lua}
    '';
    
@@ -39,22 +48,16 @@ in
     plenary-nvim
     telescope-fzf-native-nvim 
     telescope-coc-nvim
-    which-key-nvim
-          # event = "VeryLazy",
-          # init = function()
-          #   vim.o.timeout = true
-          #   vim.o.timeoutlen = 300
-          # end,
-          # opts = {}
+    { plugin = which-key-nvim; config = toLua ''require("which-key").setup()'';}
     { plugin = better-escape-nvim; config = toLua ''require("better_escape").setup()''; }
     { plugin = guess-indent-nvim; config = toLua ''require("guess-indent").setup()''; }
     { plugin = nvim-colorizer-lua; config = toLua ''require("colorizer").setup()''; }
     { plugin = nvim-autopairs; config = toLua ''require("nvim-autopairs").setup()''; }
-    { plugin = Comment-nvim; config = toLua ''require("Comment").setup()''; }
+    { plugin = comment-nvim; config = toLua ''require("Comment").setup()''; }
 
     {
       plugin = nvim-base16;
-      config = ''
+      config = with config.colorScheme.colors; toLua ''
         require('base16-colorscheme').setup({
             base00 = '#${base00}', base01 = '#${base01}', base02 = '#${base02}', base03 = '#${base03}',
             base04 = '#${base04}', base05 = '#${base05}', base06 = '#${base06}', base07 = '#${base07}',
@@ -86,7 +89,7 @@ in
         require("leap").setup {
           highlight_unlabeled = true;
         }
-      ''});
+      '';
     }
     {
       plugin = lualine-nvim;
@@ -161,6 +164,5 @@ in
       '';
     }
    ];
-  }
-
+  };
 }
