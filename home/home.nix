@@ -32,6 +32,9 @@ in
     wireguard-tools
     sage
     rofi
+    atool
+    unzip
+    zip
 
     # PYTHON
     (python3.withPackages(ps: with ps; [ numpy matplotlib pandas scipy ]))

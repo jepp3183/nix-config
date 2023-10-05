@@ -7,7 +7,6 @@
   xdg.configFile."lf/icons".source = ./lf_icons;
   
   programs.lf = {
-
     enable = true;
     settings = {
       ignorecase = true;
@@ -27,6 +26,8 @@
       mkdir = "%mkdir $1";
       touch = "%touch $1";
       trash = "%mv $fx ~/.trash";
+      extract = "%${pkgs.atool}/bin/aunpack $f";
+
     };
     keybindings = {
       # unmap clear, which removed yank/cut paths in buffer
@@ -36,6 +37,7 @@
       gn = "cd /etc/nixos";
       "<enter>" = "open";
       S = "!fish";
+      e = "extract";
     };
 
     extraConfig =
