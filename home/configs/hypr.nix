@@ -97,8 +97,8 @@
       '';
 
       power_menu = pkgs.writeShellScriptBin "power_menu.sh" ''
-        choice=$(printf ' Shutdown\n󰤄 Suspend\n Lock'\
-                  | rofi -dmenu -i -matching fuzzy -sorting-method fzf -theme-str "window {width:20%; height:25%;}"\
+        choice=$(printf ' Shutdown\n󰤄 Suspend\n Reboot\n Lock'\
+                  | rofi -dmenu -i -matching fuzzy -sorting-method fzf -theme-str "window {width:20%; height:30%;}"\
                   | awk '{print $2}'
                 )
         case $choice in
@@ -107,6 +107,9 @@
                 ;;
             Suspend)
                 systemctl suspend
+                ;;
+            Reboot)
+                systemctl reboot
                 ;;
             Lock)
                 swaylock -i /home/jeppe/Pictures/5rVFQla.jpeg

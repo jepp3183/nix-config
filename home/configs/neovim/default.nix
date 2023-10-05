@@ -7,10 +7,14 @@ in
   programs.neovim = {
    enable = true;  
    defaultEditor = true;
-   withNodeJs = true;
+   viAlias = true;
+   vimAlias = true;
+   vimdiffAlias = true;
+   # withNodeJs = true;
    coc = {
     enable = true;
     settings = builtins.readFile ./coc-settings.json; 
+    pluginConfig = builtins.readFile ./coc.vim;
    };
    extraLuaConfig = ''
     vim.opt.number = true
@@ -40,6 +44,7 @@ in
    plugins = with pkgs.vimPlugins; [
 
     copilot-vim
+    vim-nix
     vim-surround
     vim-repeat
     vim-unimpaired

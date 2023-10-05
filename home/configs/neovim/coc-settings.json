@@ -3,7 +3,6 @@
     "suggest.labelMaxLength": 60,
     "coc.preferences.formatOnSaveFiletypes": [
         "python",
-            "go",
             "rust"
     ],
     "python.formatting.provider": "autopep8",
