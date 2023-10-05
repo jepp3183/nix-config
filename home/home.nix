@@ -1,4 +1,7 @@
 {inputs, config, pkgs, ...}:
+let
+  nix-colors-lib = inputs.nix-colors.lib.contrib { inherit pkgs; };
+in
 {
   home.username = "jeppe";
   home.homeDirectory = "/home/jeppe";
@@ -47,6 +50,12 @@
     ./configs/neovim
   ];
 
+  colorScheme = inputs.nix-colors.colorSchemes.gruvbox-material-dark-hard;
+  # colorScheme = nix-colors-lib.colorSchemeFromPicture {
+  #   path = ./walls/lake.jpeg;
+  #   kind = "dark";
+  # };
+
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = {
     "application/pdf" = "sioyek.desktop";
@@ -54,8 +63,6 @@
     "image/png" = "qimgv.desktop";
     "image/gif" = "qimgv.desktop";
   };
-
-  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-mocha;
 
   programs.git = {
     enable = true;

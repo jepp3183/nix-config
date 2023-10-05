@@ -1,4 +1,4 @@
-{pkgs, config,...}:
+{pkgs, config, inputs,...}:
 {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -69,11 +69,12 @@
         "dunst"
         "[workspace special:terminal silent] kitty"
         "[workspace special:qalc silent] kitty -e qalc"
-        "${pkgs.swaybg}/bin/swaybg -i Pictures/5rVFQla.jpeg"
       ];
-      exec = [];
+      exec = [
+        ''${pkgs.swaybg}/bin/swaybg -i "${../walls/dune.jpg}"''
+      ];
       windowrule = [
-        "opacity 0.9,(kitty)"
+        "opacity 0.7,(kitty)"
       ];
     }; 
 
