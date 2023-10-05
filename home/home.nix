@@ -24,7 +24,6 @@
     gdu
     lazygit
     libqalculate
-    nodejs_20 # Needed for neovim (coc)
     nushell
     rclone
     wireguard-tools
