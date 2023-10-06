@@ -53,7 +53,7 @@ in
     ./configs/neovim
   ];
 
-  colorScheme = inputs.nix-colors.colorSchemes.gruvbox-material-dark-hard;
+  colorScheme = inputs.nix-colors.colorSchemes.selenized-black;
   # colorScheme = nix-colors-lib.colorSchemeFromPicture {
   #   path = ./walls/lake.jpeg;
   #   kind = "dark";

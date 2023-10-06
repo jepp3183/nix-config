@@ -62,6 +62,9 @@
           workspace_swipe = true;
       };
       monitor = "eDP-1,1920x1080@60.033001,auto,1";
+      misc = {
+        disable_hyprland_logo = true;
+      };
 
       exec-once = [
         "waybar"
@@ -71,7 +74,7 @@
         "[workspace special:qalc silent] kitty -e qalc"
       ];
       exec = [
-        ''${pkgs.swaybg}/bin/swaybg -i "${../walls/dune.jpg}"''
+        ''${pkgs.swaybg}/bin/swaybg -i "${../walls/got.jpeg}"''
       ];
       windowrule = [
         "opacity 0.85,(kitty)"

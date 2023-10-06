@@ -1,9 +1,13 @@
-{pkgs,config,...}:
+{pkgs,config, inputs,...}:
 
 let
     icon = i: "<span size='x-large' rise='-1800'>${i}</span>";
     sep = sep: list: 
       pkgs.lib.strings.splitString "." (builtins.concatStringsSep ".${sep}." list);
+
+    hexToRGBString = inputs.nix-colors.lib.conversions.hexToRGBString;
+    hexToRGBA = alpha: hex: "rgba(${hexToRGBString "," hex}, ${builtins.toString alpha})";
+
 in
 {
   programs.waybar = {
@@ -41,19 +45,21 @@ in
         };
         "hyprland/workspaces" = {
             format-icons = {
-                "1" = "";
-                "2" = "";
-                "3" = "";
-                "4" = "";
-                "5" = "";
-                "6" = "";
-                "7" = "";
-                "8" = "";
-                "9" = "";
-                "10" = "";
-                "active" = "";
+                "1" = "1";
+                "2" = "2";
+                "3" = "3";
+                "4" = "4";
+                "5" = "5";
+                "6" = "6";
+                "7" = "7";
+                "8" = "8";
+                "9" = "9";
+                "10" = "10";
             };
             format = "{icon}";
+            persistent_workspaces = {
+              "*" = 5;
+            };
         };
         clock = {
         format = "{:${icon ""} %A,%e.%B ${icon "󰥔"} %R}";
@@ -132,6 +138,11 @@ in
     };
 
     style = with config.colorScheme.colors; ''
+      @define-color bg ${hexToRGBA 0.5 base00};
+      @define-color module-bg #${base0D};
+      @define-color text-color #${base01};
+      @define-color hover-color #${base05};
+
       * {
           font-family: FiraCode Nerd Font Mono;
           font-weight: 500;
@@ -139,13 +150,23 @@ in
       }
 
       window#waybar {
-          background-color: #${base00};
+          background-color: @bg;
           transition-property: background-color;
-          transition-duration: .5s;
+          transition-duration: .2s;
       }
 
       window#waybar.empty {
           background-color: transparent;
+      }
+
+     .modules-right > *, .modules-center > *, #custom-media  {
+        color: @text-color;
+        background-color: @module-bg;
+        border-radius: 20px;
+     }
+
+     .modules-right, .modules-left, .modules-center  {
+        margin: 5px 5px;
       }
 
       button {
@@ -156,21 +177,37 @@ in
           border-radius: 0;
       }
 
-      /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
-      button:hover {
-          background: inherit;
-          box-shadow: inherit;
-          text-shadow: inherit;
+      #workspaces {
+        background-color: transparent;
+        margin-right: 5px
       }
 
       #workspaces button {
-          padding: 0 7px;
-          color: inherit;
+          margin: 0px 2px;
+          color: @text-color;
+          background-color: @module-bg;
+          border-radius: 50%;
+          font-size: 18px;
+          font-weight: 700;
+      }
+
+      #workspaces button.active, #workspaces button.active.persistent {
+          background-color: #${base0B};
+          transition-property: background-color;
+          transition-duration: .3s;
       }
 
       #workspaces button:hover {
-        background: #${base05};
-        border-radius: 10px;
+        background: @hover-color;
+      }
+
+      #workspaces button > * {
+          font-size: 18px;
+          font-weight: 700;
+      }
+
+      #workspaces button.persistent {
+          background-color: transparent;
       }
 
       #clock, #battery, #cpu, #memory, #disk, #temperature, #backlight,
@@ -179,26 +216,16 @@ in
         padding: 0px 10px;
       }
 
+
+
       #custom-sep {
         background-color: rgba(16, 22, 26, 1.0);
         margin: 0px -2px;
       }  
 
-     .modules-right > *, .modules-left > *, .modules-center > *  {
-        color: #${base01};
-        background-color: #${base0D};
-        border-radius: 10px;
-     }
-
-     .modules-right, .modules-left, .modules-center  {
-        margin: 5px 5px;
-      }
-
       #custom-media {
         font-size: 14px;
       }
-
-
 
       #workspaces button.urgent {
           background-color: #eb4d4b;
@@ -210,7 +237,7 @@ in
 
       @keyframes blink {
           to {
-              color: #${base01};
+              color: @text-color;
           }
       }
 
@@ -227,6 +254,14 @@ in
           -gtk-icon-effect: highlight;
           background-color: #eb4d4b;
       }
+
+      /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+      button:hover {
+          background: inherit;
+          box-shadow: inherit;
+          text-shadow: inherit;
+      }
+
     '';
   };
 }
