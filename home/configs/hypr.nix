@@ -74,7 +74,7 @@
         ''${pkgs.swaybg}/bin/swaybg -i "${../walls/dune.jpg}"''
       ];
       windowrule = [
-        "opacity 0.7,(kitty)"
+        "opacity 0.85,(kitty)"
       ];
     }; 
 

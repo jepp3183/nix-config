@@ -6,10 +6,11 @@
       { name = "hydro-prompt"; src = pkgs.fishPlugins.hydro.src; }
     ];
     shellAliases = {
-      gs = "git status";
-      cat = "bat";
-      man = "batman";
-      ls = "eza";
+      gs = "${pkgs.git }/bin/git status";
+      gg = "${pkgs.lazygit}/bin/lazygit";
+      cat = "${pkgs.bat}/bin/bat";
+      man = "${pkgs.bat-extras.batman}/bin/batman";
+      ls = "${pkgs.eza}/bin/eza";
     };
     interactiveShellInit = ''
       set fish_greeting

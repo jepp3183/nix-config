@@ -12,21 +12,37 @@
       ignorecase = true;
       icons = true;
       preview = true;
+      incsearch = true;
+      incfilter = true;
     };
 
     commands = {
       open = ''
         ''${{
           case $(${pkgs.file}/bin/file -Lb --mime-type "$f") in
-            text/*) $EDITOR "$f";;
-            *) nohup xdg-open "$f" >/dev/null 2>&1 &;;
+            text/*) $EDITOR $fx;;
+            *) for f in $fx; do xdg-open $f > /dev/null 2> /dev/null & done;;
           esac
         }}
       '';
-      mkdir = "%mkdir $1";
-      touch = "%touch $1";
-      trash = "%mv $fx ~/.trash";
+      mkdir = "&mkdir $1";
+      touch = "&touch $1";
+      trash = "&mv $fx ~/.trash";
       extract = "%${pkgs.atool}/bin/aunpack $f";
+      zip = ''
+        ''${{
+          clear
+          printf "%s\n" $fx | head -n 25
+          printf "Archive Filename: "
+          read archive
+          printf "%s\n" $fx\
+           | xargs -d '\n' realpath --relative-to=$PWD\
+           | xargs -I '{}' -d '\n' echo "\"{}\""\
+           | apack -F zip $archive
+
+          lf -remote "send $id unselect"
+        }}
+      '';
 
     };
     keybindings = {
@@ -38,6 +54,8 @@
       "<enter>" = "open";
       S = "!fish";
       e = "extract";
+      f = "filter";
+      z = "zip";
     };
 
     extraConfig =
