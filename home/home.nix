@@ -14,9 +14,11 @@ in
     anydesk
     vlc
     qimgv
-    wl-clipboard
+    insync
+    parsec-bin
     
     # CMD UTILS
+    wl-clipboard
     fd
     ripgrep
     eza
@@ -53,7 +55,7 @@ in
     ./configs/neovim
   ];
 
-  colorScheme = inputs.nix-colors.colorSchemes.selenized-black;
+  colorScheme = inputs.nix-colors.colorSchemes.gruvbox-material-dark-hard;
   # colorScheme = nix-colors-lib.colorSchemeFromPicture {
   #   path = ./walls/lake.jpeg;
   #   kind = "dark";

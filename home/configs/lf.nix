@@ -55,7 +55,8 @@
       S = "!fish";
       e = "extract";
       f = "filter";
-      z = "zip";
+      H = "set hidden!";
+      # z = "zip";
     };
 
     extraConfig =

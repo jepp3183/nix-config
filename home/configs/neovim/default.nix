@@ -34,6 +34,8 @@ in
     vim.opt.scrolloff = 8
     vim.opt.mouse = "a"
 
+    vim.g.typst_pdf_viewer = "zathura"
+
     -- For which-key:
     vim.o.timeout = true
     vim.o.timeoutlen = 300
@@ -53,6 +55,8 @@ in
     plenary-nvim
     telescope-fzf-native-nvim 
     telescope-coc-nvim
+    typst-vim
+
     { plugin = which-key-nvim; config = toLua ''require("which-key").setup()'';}
     { plugin = better-escape-nvim; config = toLua ''require("better_escape").setup()''; }
     { plugin = guess-indent-nvim; config = toLua ''require("guess-indent").setup()''; }

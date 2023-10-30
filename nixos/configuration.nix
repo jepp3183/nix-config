@@ -39,6 +39,10 @@
   # Enable networking
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
+  networking.extraHosts = ''
+      192.168.10.180 vm-docker
+    '';
+
 
   # Set your time zone.
   time.timeZone = "Europe/Copenhagen";
