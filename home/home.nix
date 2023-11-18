@@ -53,6 +53,7 @@ in
     ./configs/sioyek.nix
     ./configs/rofi.nix
     ./configs/neovim
+    ./configs/vscode.nix
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.gruvbox-material-dark-hard;
