@@ -24,7 +24,7 @@ vim.keymap.set('n', '<Leader>fg', '<cmd>Telescope live_grep<cr>')
 vim.keymap.set('n', '<Leader>fb', '<cmd>Telescope buffers<cr>')
 vim.keymap.set('n', '<Leader>fh', '<cmd>Telescope help_tags<cr>')
 vim.keymap.set('n', '<Leader>fk', '<cmd>Telescope keymaps<cr>')
-vim.keymap.set('n', '<Leader>fc', '<cmd>Telescope find_files cwd=/etc/nixos/nvim<cr>')
+vim.keymap.set('n', '<Leader>fc', '<cmd>Telescope find_files cwd=/etc/nixos<cr>')
 
 -- COC
 vim.keymap.set('n', 'gd', '<Plug>(coc-definition)')
@@ -34,7 +34,7 @@ vim.keymap.set('n', '<Leader>lS', '<cmd>Telescope coc workspace_symbols<cr>')
 vim.keymap.set('n', '<Leader>lr', '<cmd>Telescope coc references_used<cr>')
 vim.keymap.set('n', '<Leader>ld', '<cmd>Telescope coc workspace_diagnostics<cr>')
 vim.keymap.set('n', '<leader>lq', '<Plug>(coc-fix-current)')
-vim.keymap.set('n', '<leader>lr', '<Plug>(coc-rename)')
+vim.keymap.set('n', '<leader>lR', '<Plug>(coc-rename)')
 vim.keymap.set('x', '<leader>la', '<Plug>(coc-codeaction-selected)')
 vim.keymap.set('n', '<leader>la', '<Plug>(coc-codeaction-selected)')
 

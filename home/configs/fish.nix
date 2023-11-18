@@ -12,6 +12,7 @@
       man = "${pkgs.bat-extras.batman}/bin/batman";
       ls = "${pkgs.eza}/bin/eza";
       s = "kitten ssh";
+      lg = "${pkgs.lazygit}/bin/lazygit";
     };
     interactiveShellInit = ''
       set fish_greeting
