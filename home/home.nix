@@ -39,7 +39,14 @@ in
     zip
 
     # PYTHON
-    (python3.withPackages(ps: with ps; [ numpy matplotlib pandas scipy ]))
+    (python3.withPackages(ps: with ps; [ 
+      numpy 
+      matplotlib 
+      pandas
+      scipy
+      jupyter
+      notebook
+    ]))
   ];
 
   imports = [
