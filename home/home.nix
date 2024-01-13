@@ -8,6 +8,7 @@ in
   home.packages = with pkgs; [
     # GUI Packages
     microsoft-edge
+    firefox
     spotify
     obsidian
     discord
