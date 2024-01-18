@@ -17,6 +17,7 @@ in
     qimgv
     insync
     parsec-bin
+    obs-studio
     
     # CMD UTILS
     wl-clipboard
@@ -38,6 +39,8 @@ in
     atool
     unzip
     zip
+    android-tools
+    scrcpy
 
     # PYTHON
     (python3.withPackages(ps: with ps; [ 
