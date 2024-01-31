@@ -109,13 +109,6 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-
-  fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" "Meslo" ]; })
-  ];
-
-
   # rtkit is optional but recommended
   security.rtkit.enable = true;
   services.pipewire = {
@@ -134,5 +127,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
-
 }
