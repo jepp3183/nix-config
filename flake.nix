@@ -11,7 +11,7 @@
     in {
     
       nixosConfigurations = {
-        "nixos" = nixpkgs.lib.nixosSystem {
+        "nixos-envy" = nixpkgs.lib.nixosSystem {
 
           inherit system;
           modules = [
