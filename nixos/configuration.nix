@@ -14,6 +14,7 @@
     curl
     neovim
     kitty
+    wezterm
     git
 
     (waybar.overrideAttrs (oldAttrs: {
@@ -72,7 +73,9 @@
     displayManager.sddm = {
       enable = true;
       theme = "chili";
+      wayland.enable = true;
     };
+    desktopManager.plasma6.enable = true;
     
     layout = "us";
     xkbVariant = "";
