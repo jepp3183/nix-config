@@ -16,6 +16,7 @@
     kitty
     wezterm
     git
+    dnsutils
 
     (waybar.overrideAttrs (oldAttrs: {
     mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ]; }))
