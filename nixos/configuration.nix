@@ -6,6 +6,8 @@
       ./hardware-configuration.nix
     ];
 
+  # What could possibly go wrong?
+  networking.firewall.enable = false;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
    
@@ -17,6 +19,7 @@
     wezterm
     git
     dnsutils
+    wireshark
 
     (waybar.overrideAttrs (oldAttrs: {
     mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ]; }))
@@ -30,6 +33,8 @@
     swaylock
     sddm-chili-theme
   ];
+  programs.wireshark.enable = true; # Does some extra needed work
+
 
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
@@ -42,6 +47,11 @@
     xwayland.enable = true;
   };
 
+  virtualisation.virtualbox = {
+    host.enable = true;
+    guest.enable = true;
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -50,23 +60,6 @@
   networking.hostName = "nixos-envy"; # Define your hostname.
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
-  time.timeZone = "Europe/Copenhagen";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_DK.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "da_DK.UTF-8";
-    LC_IDENTIFICATION = "da_DK.UTF-8";
-    LC_MEASUREMENT = "da_DK.UTF-8";
-    LC_MONETARY = "da_DK.UTF-8";
-    LC_NAME = "da_DK.UTF-8";
-    LC_NUMERIC = "da_DK.UTF-8";
-    LC_PAPER = "da_DK.UTF-8";
-    LC_TELEPHONE = "da_DK.UTF-8";
-    LC_TIME = "da_DK.UTF-8";
-  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -76,8 +69,6 @@
       theme = "chili";
       wayland.enable = true;
     };
-    desktopManager.plasma6.enable = true;
-    
     layout = "us";
     xkbVariant = "";
   };
@@ -86,7 +77,7 @@
   users.users.jeppe = {
     isNormalUser = true;
     description = "Jeppe Allerslev";
-    extraGroups = [ "networkmanager" "wheel" "input" ];
+    extraGroups = [ "networkmanager" "wheel" "input" "wireshark" "vboxusers" ];
     shell = pkgs.fish;
   };
   programs.fish.enable = true;
@@ -110,12 +101,29 @@
   auth include login
   '';
   
-
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # Set your time zone.
+  time.timeZone = "Europe/Copenhagen";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_DK.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "da_DK.UTF-8";
+    LC_IDENTIFICATION = "da_DK.UTF-8";
+    LC_MEASUREMENT = "da_DK.UTF-8";
+    LC_MONETARY = "da_DK.UTF-8";
+    LC_NAME = "da_DK.UTF-8";
+    LC_NUMERIC = "da_DK.UTF-8";
+    LC_PAPER = "da_DK.UTF-8";
+    LC_TELEPHONE = "da_DK.UTF-8";
+    LC_TIME = "da_DK.UTF-8";
+  };
 
   # rtkit is optional but recommended
   security.rtkit.enable = true;
