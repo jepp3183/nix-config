@@ -55,6 +55,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
 
   # Enable networking
   networking.hostName = "nixos-envy"; # Define your hostname.
