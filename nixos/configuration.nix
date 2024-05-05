@@ -7,7 +7,15 @@
     ];
 
   # What could possibly go wrong?
-  networking.firewall.enable = false;
+  networking.firewall = {
+    enable = true;
+    allowedTCPPortRanges = [
+      {from = 0; to=65535;}
+    ];
+    allowedUDPPortRanges = [
+      {from = 0; to=65535;}
+    ];
+  };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
    
@@ -33,24 +41,32 @@
     swaylock
     sddm-chili-theme
   ];
-  programs.wireshark.enable = true; # Does some extra needed work
 
-
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    # Add any missing dynamic libraries for unpackaged programs
-    # here, NOT in environment.systemPackages
-  ];
-
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
+  programs = {
+    nh = {
+      enable = true;
+      flake = "/etc/nixos";
+    };
+    
+    wireshark.enable = true; # Does some extra needed work
+    nix-ld.enable = true;
+    nix-ld.libraries = with pkgs; [
+      # Add any missing dynamic libraries for unpackaged programs
+      # here, NOT in environment.systemPackages
+    ];
+    hyprland = {
+      enable = true;
+      xwayland.enable = true;
+    };
   };
+
+
 
   virtualisation.virtualbox = {
     host.enable = true;
     guest.enable = true;
   };
+  virtualisation.waydroid.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
