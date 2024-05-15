@@ -67,6 +67,9 @@
     guest.enable = true;
   };
   virtualisation.waydroid.enable = true;
+  virtualisation.docker = {
+    enable = true;
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -94,7 +97,7 @@
   users.users.jeppe = {
     isNormalUser = true;
     description = "Jeppe Allerslev";
-    extraGroups = [ "networkmanager" "wheel" "input" "wireshark" "vboxusers" ];
+    extraGroups = [ "networkmanager" "wheel" "input" "wireshark" "vboxusers" "docker" ];
     shell = pkgs.fish;
   };
   programs.fish.enable = true;
