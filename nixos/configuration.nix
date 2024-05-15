@@ -28,6 +28,7 @@
     git
     dnsutils
     wireshark
+    distrobox
 
     (waybar.overrideAttrs (oldAttrs: {
     mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ]; }))
