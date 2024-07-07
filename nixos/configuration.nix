@@ -61,9 +61,6 @@
     };
   };
 
-  services.desktopManager.plasma6.enable = true;
-
-
   virtualisation.virtualbox = {
     host.enable = true;
     guest.enable = true;
