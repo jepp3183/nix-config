@@ -24,7 +24,6 @@
     curl
     neovim
     kitty
-    wezterm
     git
     dnsutils
     wireshark
