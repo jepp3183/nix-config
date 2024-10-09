@@ -58,6 +58,12 @@
       enable = true;
       xwayland.enable = true;
     };
+
+    _1password.enable = true;
+    _1password-gui = {
+        enable = true;
+        polkitPolicyOwners = [ "jeppe" ];
+      };
   };
 
   virtualisation.virtualbox = {
@@ -94,7 +100,7 @@
   users.users.jeppe = {
     isNormalUser = true;
     description = "Jeppe Allerslev";
-    extraGroups = [ "networkmanager" "wheel" "input" "wireshark" "vboxusers" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "input" "wireshark" "vboxusers" "docker" "dialout" ];
     shell = pkgs.fish;
   };
   programs.fish.enable = true;
