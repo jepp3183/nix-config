@@ -63,7 +63,8 @@
     _1password-gui = {
         enable = true;
         polkitPolicyOwners = [ "jeppe" ];
-      };
+    };
+    steam.enable = true;
   };
 
   virtualisation.virtualbox = {
