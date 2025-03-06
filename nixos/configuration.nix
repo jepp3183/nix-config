@@ -39,7 +39,7 @@
     brightnessctl
     playerctl
     swaylock
-    sddm-chili-theme
+    # sddm-chili-theme
   ];
 
   programs = {
@@ -84,13 +84,16 @@
   networking.hostName = "nixos-envy"; # Define your hostname.
   networking.networkmanager.enable = true;
 
+  services.tailscale.enable = true;
+  services.tailscale.useRoutingFeatures = "both";
+
 
   # Configure keymap in X11
   services.xserver = {
     enable = true;
     displayManager.sddm = {
       enable = true;
-      theme = "chili";
+      # theme = "chili";
       wayland.enable = true;
     };
     layout = "us";
