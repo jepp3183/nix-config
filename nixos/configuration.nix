@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, pkgs-ab0c, inputs, ... }:
 
 {
   imports =
@@ -156,6 +156,7 @@
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
+    package = pkgs-ab0c.pipewire;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
