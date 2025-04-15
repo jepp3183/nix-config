@@ -28,6 +28,7 @@
     dnsutils
     wireshark
     distrobox
+    wireguard-tools
 
     (waybar.overrideAttrs (oldAttrs: {
     mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ]; }))
@@ -94,7 +95,11 @@
 
   # Enable networking
   networking.hostName = "nixos-envy"; # Define your hostname.
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    dns = "systemd-resolved";
+  };
+  services.resolved.enable = true;
 
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "both";
