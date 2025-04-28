@@ -6,6 +6,8 @@
       ./hardware-configuration.nix
     ];
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+   
   # What could possibly go wrong?
   networking.firewall = {
     enable = true;
@@ -17,8 +19,6 @@
     ];
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-   
   environment.systemPackages = with pkgs; [
     wget
     curl
@@ -35,14 +35,11 @@
 
     swaynotificationcenter
     hyprpolkitagent
-    # dunst #notifications
-    # libnotify #dunst needs this
     networkmanagerapplet
     pavucontrol
     brightnessctl
     playerctl
     swaylock
-    # sddm-chili-theme
   ];
 
   programs = {
@@ -57,6 +54,7 @@
       # Add any missing dynamic libraries for unpackaged programs
       # here, NOT in environment.systemPackages
     ];
+
     hyprland = {
       enable = true;
       withUWSM = true;
@@ -71,12 +69,14 @@
     steam.enable = true;
   };
 
-  virtualisation.virtualbox = {
-    host.enable = true;
-    guest.enable = true;
-  };
-  virtualisation.docker = {
-    enable = true;
+  virtualisation = {
+    virtualbox = {
+      host.enable = true;
+      guest.enable = true;
+    };
+    docker = {
+      enable = true;
+    };
   };
 
   services.desktopManager.plasma6.enable = true;
@@ -103,7 +103,6 @@
 
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "both";
-
 
   # Configure keymap in X11
   services.xserver = {

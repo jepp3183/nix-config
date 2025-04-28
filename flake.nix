@@ -22,7 +22,20 @@
           };
 
           modules = [
-            ./nixos/configuration.nix
+            ./nixos/envy/configuration.nix
+          ];
+        };
+        "nixos-desktop" = nixpkgs.lib.nixosSystem {
+          inherit system;
+
+          specialArgs = {
+            pkgs-ab0c = import nixpkgs-ab0c {
+              inherit system;
+            };
+          };
+
+          modules = [
+            ./nixos/desktop/configuration.nix
           ];
         };
       }; 
