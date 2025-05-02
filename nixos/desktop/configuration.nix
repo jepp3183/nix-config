@@ -29,6 +29,7 @@
      wireshark
      distrobox
      wireguard-tools
+     keymapp
 
      (waybar.overrideAttrs (oldAttrs: {
      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ]; }))
@@ -40,7 +41,8 @@
      brightnessctl
      playerctl
      swaylock
-  ];
+     sddm-astronaut
+  ] ++ [kdePackages.qtmultimedia];
 
   programs = {
     nh = {
@@ -70,17 +72,13 @@
   };
 
   virtualisation = {
-    virtualbox = {
-      host.enable = true;
-      guest.enable = true;
-    };
     docker = {
       enable = true;
     };
   };
 
   services.desktopManager.plasma6.enable = true;
-    environment.plasma6.excludePackages = with pkgs.kdePackages; [
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
     konsole
     elisa
     gwenview
@@ -102,6 +100,23 @@
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "both";
 
+  services.xserver = {
+    enable = true;
+  };
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+    extraPackages = [
+      pkgs.sddm-astronaut
+    ];
+    theme = "sddm-astronaut-theme";
+    settings = {        
+      Theme = {
+        Current = "sddm-astronaut-theme";
+      };
+    };
+  };
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -118,6 +133,7 @@
     open = true; # Set to false to use the proprietary kernel module
     modesetting.enable = true;
     nvidiaSettings = true;
+    powerManagement.enable = true;
   };
 
   # Set your time zone.
@@ -138,15 +154,11 @@
     LC_TIME = "da_DK.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -168,7 +180,7 @@
   users.users.jeppe = {
     isNormalUser = true;
     description = "jeppe";
-    extraGroups = [ "networkmanager" "wheel" "input" "wireshark" "vboxusers" "docker" "dialout" ];
+    extraGroups = [ "plugdev" "networkmanager" "wheel" "input" "wireshark" "vboxusers" "docker" "dialout" ];
     shell = pkgs.fish;
   };
   
@@ -192,6 +204,13 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # Moonlander setup
+  services.udev.extraRules = ''
+  KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
+  KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev" 
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666", SYMLINK+="stm32_dfu"
+  '';
 
 
   # Some programs need SUID wrappers, can be configured further or are
