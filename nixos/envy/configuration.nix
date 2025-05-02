@@ -4,180 +4,22 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../common.nix
     ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-   
-  # What could possibly go wrong?
-  networking.firewall = {
-    enable = true;
-    allowedTCPPortRanges = [
-      {from = 0; to=65535;}
-    ];
-    allowedUDPPortRanges = [
-      {from = 0; to=65535;}
-    ];
-  };
-
-  environment.systemPackages = with pkgs; [
-    wget
-    curl
-    neovim
-    kitty
-    git
-    dnsutils
-    wireshark
-    distrobox
-    wireguard-tools
-
-    (waybar.overrideAttrs (oldAttrs: {
-    mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ]; }))
-
-    swaynotificationcenter
-    hyprpolkitagent
-    networkmanagerapplet
-    pavucontrol
-    brightnessctl
-    playerctl
-    swaylock
-  ];
-
-  programs = {
-    nh = {
-      enable = true;
-      flake = "/etc/nixos";
-    };
-    
-    wireshark.enable = true; # Does some extra needed work
-    nix-ld.enable = true;
-    nix-ld.libraries = with pkgs; [
-      # Add any missing dynamic libraries for unpackaged programs
-      # here, NOT in environment.systemPackages
-    ];
-
-    hyprland = {
-      enable = true;
-      withUWSM = true;
-      xwayland.enable = true;
-    };
-
-    _1password.enable = true;
-    _1password-gui = {
-        enable = true;
-        polkitPolicyOwners = [ "jeppe" ];
-    };
-    steam.enable = true;
-  };
-
-  virtualisation = {
-    virtualbox = {
-      host.enable = true;
-      guest.enable = true;
-    };
-    docker = {
-      enable = true;
-    };
-  };
-
-  services.desktopManager.plasma6.enable = true;
-  environment.plasma6.excludePackages = with pkgs.kdePackages; [
-    konsole
-    elisa
-    gwenview
-    okular
-    kate
-  ];
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
 
   # Enable networking
   networking.hostName = "nixos-envy"; # Define your hostname.
-  networking.networkmanager = {
-    enable = true;
-    dns = "systemd-resolved";
-  };
-  services.resolved.enable = true;
 
-  services.tailscale.enable = true;
-  services.tailscale.useRoutingFeatures = "both";
-
-  # Configure keymap in X11
-  services.xserver = {
-    enable = true;
-    displayManager.sddm = {
-      enable = true;
-      # theme = "chili";
-      wayland.enable = true;
-    };
-    layout = "us";
-    xkbVariant = "";
-  };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.jeppe = {
-    isNormalUser = true;
-    description = "Jeppe Allerslev";
-    extraGroups = [ "networkmanager" "wheel" "input" "wireshark" "vboxusers" "docker" "dialout" ];
-    shell = pkgs.fish;
-  };
-  programs.fish.enable = true;
-  users.defaultUserShell = pkgs.fish;
-  environment.shells = [ pkgs.fish ];
-
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-  };
-
-  # environment.variables.EDITOR = "nvim";
-
-  hardware.opengl.enable = true;
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
+  hardware.graphics.enable = true;
   services.acpid= {
     enable = true;
     logEvents = true;
   };
-  security.pam.services.swaylock.text = ''
-  auth include login
-  '';
   
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-hyprland ];
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # Set your time zone.
-  time.timeZone = "Europe/Copenhagen";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_DK.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "da_DK.UTF-8";
-    LC_IDENTIFICATION = "da_DK.UTF-8";
-    LC_MEASUREMENT = "da_DK.UTF-8";
-    LC_MONETARY = "da_DK.UTF-8";
-    LC_NAME = "da_DK.UTF-8";
-    LC_NUMERIC = "da_DK.UTF-8";
-    LC_PAPER = "da_DK.UTF-8";
-    LC_TELEPHONE = "da_DK.UTF-8";
-    LC_TIME = "da_DK.UTF-8";
-  };
-
-  # rtkit is optional but recommended
-  security.rtkit.enable = true;
   services.pipewire = {
-    enable = true;
     package = pkgs-ab0c.pipewire;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
   };
 
   # This value determines the NixOS release from which the default

@@ -112,6 +112,9 @@
     };
   };
 
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-hyprland ];
+
 # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -162,7 +165,7 @@
   users.users.jeppe = {
     isNormalUser = true;
     description = "jeppe";
-    extraGroups = [ "plugdev" "networkmanager" "wheel" "input" "wireshark" "vboxusers" "docker" "dialout" ];
+    extraGroups = [ "plugdev" "networkmanager" "wheel" "input" "wireshark" "docker" "dialout" ];
     shell = pkgs.fish;
   };
   
