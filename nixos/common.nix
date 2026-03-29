@@ -87,9 +87,6 @@
   };
   services.resolved.enable = true;
 
-  services.tailscale.enable = true;
-  services.tailscale.useRoutingFeatures = "both";
-
   services.xserver = {
     enable = true;
   };
