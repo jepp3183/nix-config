@@ -25,7 +25,7 @@
             ./nixos/envy/configuration.nix
           ];
         };
-        "nixos-desktop" = nixpkgs.lib.nixosSystem {
+        "nixos" = nixpkgs.lib.nixosSystem {
           inherit system;
 
           specialArgs = {

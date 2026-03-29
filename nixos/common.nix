@@ -179,9 +179,6 @@
   auth include login
   '';
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
   # Moonlander setup
   services.udev.extraRules = ''
   KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
