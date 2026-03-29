@@ -26,18 +26,10 @@
      distrobox
      wireguard-tools
      keymapp
-
-     (waybar.overrideAttrs (oldAttrs: {
-     mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ]; }))
-
-     swaynotificationcenter
-     hyprpolkitagent
      networkmanagerapplet
      pavucontrol
      brightnessctl
      playerctl
-     swaylock
-     sddm-astronaut
   ] ++ [kdePackages.qtmultimedia];
 
   programs = {
@@ -45,19 +37,13 @@
       enable = true;
       flake = "/etc/nixos";
     };
-    
+
     wireshark.enable = true; # Does some extra needed work
     nix-ld.enable = true;
     nix-ld.libraries = with pkgs; [
       # Add any missing dynamic libraries for unpackaged programs
       # here, NOT in environment.systemPackages
     ];
-
-    hyprland = {
-      enable = true;
-      withUWSM = true;
-      xwayland.enable = true;
-    };
 
     steam.enable = true;
   };
@@ -90,22 +76,9 @@
   services.xserver = {
     enable = true;
   };
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-    extraPackages = [
-      pkgs.sddm-astronaut
-    ];
-    theme = "sddm-astronaut-theme";
-    settings = {        
-      Theme = {
-        Current = "sddm-astronaut-theme";
-      };
-    };
-  };
 
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-hyprland ];
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
 # Configure keymap in X11
   services.xserver.xkb = {
@@ -153,14 +126,14 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.jeppe = {
     isNormalUser = true;
     description = "jeppe";
     extraGroups = [ "plugdev" "networkmanager" "wheel" "input" "wireshark" "docker" "dialout" ];
     shell = pkgs.fish;
   };
-  
+
   programs.fish.enable = true;
   users.defaultUserShell = pkgs.fish;
   environment.shells = [ pkgs.fish ];
@@ -172,14 +145,10 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
-  security.pam.services.swaylock.text = ''
-  auth include login
-  '';
-
   # Moonlander setup
   services.udev.extraRules = ''
   KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
-  KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev" 
+  KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev"
   SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666", SYMLINK+="stm32_dfu"
   '';
 
