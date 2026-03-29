@@ -5,6 +5,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../config/common.nix
+      ../config/plasma.nix
     ];
 
   networking.hostName = "nixos"; # Define your hostname.

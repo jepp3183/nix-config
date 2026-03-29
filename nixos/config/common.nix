@@ -30,7 +30,7 @@
      pavucontrol
      brightnessctl
      playerctl
-  ] ++ [kdePackages.qtmultimedia];
+  ];
 
   programs = {
     nh = {
@@ -53,15 +53,6 @@
       enable = true;
     };
   };
-
-  services.desktopManager.plasma6.enable = true;
-  environment.plasma6.excludePackages = with pkgs.kdePackages; [
-    konsole
-    elisa
-    gwenview
-    okular
-    kate
-  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

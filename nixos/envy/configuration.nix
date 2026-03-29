@@ -1,12 +1,18 @@
-{ config, pkgs, pkgs-ab0c, inputs, ... }:
+{
+  config,
+  pkgs,
+  pkgs-ab0c,
+  inputs,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../config/common.nix
-      ../config/hyprland.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../config/common.nix
+    ../config/hyprland.nix
+  ];
 
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
 
@@ -14,11 +20,11 @@
   networking.hostName = "nixos-envy"; # Define your hostname.
 
   hardware.graphics.enable = true;
-  services.acpid= {
+  services.acpid = {
     enable = true;
     logEvents = true;
   };
-  
+
   services.pipewire = {
     package = pkgs-ab0c.pipewire;
   };
