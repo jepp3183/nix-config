@@ -30,6 +30,7 @@
      pavucontrol
      brightnessctl
      playerctl
+     pulseaudio #Running pipewire, but pactl is nice
   ];
 
   programs = {
