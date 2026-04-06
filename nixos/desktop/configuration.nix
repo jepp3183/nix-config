@@ -6,6 +6,7 @@
       ./hardware-configuration.nix
       ../config/common.nix
       ../config/plasma.nix
+      ../config/niri.nix
     ];
 
   networking.hostName = "nixos"; # Define your hostname.
