@@ -21,7 +21,6 @@
     modesetting.enable = true;
     nvidiaSettings = true;
     powerManagement.enable = true;
-    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production; # Latest production driver
   };
 
   # make MSI ultrawide AUX work on desktop
