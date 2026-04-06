@@ -10,6 +10,10 @@
 
   networking.hostName = "nixos"; # Define your hostname.
 
+  environment.systemPackages = with pkgs; [
+    streamdeck-ui
+  ];
+
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [nvidia-vaapi-driver];
