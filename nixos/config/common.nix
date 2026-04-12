@@ -1,36 +1,45 @@
 { config, pkgs, ... }:
 
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nixpkgs.config.allowUnfree = true;
 
   # What could possibly go wrong?
   networking.firewall = {
     enable = true;
     allowedTCPPortRanges = [
-      {from = 0; to=65535;}
+      {
+        from = 0;
+        to = 65535;
+      }
     ];
     allowedUDPPortRanges = [
-      {from = 0; to=65535;}
+      {
+        from = 0;
+        to = 65535;
+      }
     ];
   };
 
   environment.systemPackages = with pkgs; [
-     wget
-     curl
-     neovim
-     kitty
-     git
-     dnsutils
-     wireshark
-     distrobox
-     wireguard-tools
-     keymapp
-     networkmanagerapplet
-     pavucontrol
-     brightnessctl
-     playerctl
-     pulseaudio #Running pipewire, but pactl is nice
+    wget
+    curl
+    neovim
+    kitty
+    git
+    dnsutils
+    wireshark
+    distrobox
+    wireguard-tools
+    keymapp
+    networkmanagerapplet
+    pavucontrol
+    brightnessctl
+    playerctl
+    pulseaudio # Running pipewire, but pactl is nice
   ];
 
   programs = {
@@ -62,6 +71,9 @@
   networking.networkmanager = {
     enable = true;
     dns = "systemd-resolved";
+    plugins = with pkgs; [
+      networkmanager-openvpn
+    ];
   };
   services.resolved.enable = true;
 
@@ -72,7 +84,7 @@
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-# Configure keymap in X11
+  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "";
@@ -122,7 +134,15 @@
   users.users.jeppe = {
     isNormalUser = true;
     description = "jeppe";
-    extraGroups = [ "plugdev" "networkmanager" "wheel" "input" "wireshark" "docker" "dialout" ];
+    extraGroups = [
+      "plugdev"
+      "networkmanager"
+      "wheel"
+      "input"
+      "wireshark"
+      "docker"
+      "dialout"
+    ];
     shell = pkgs.fish;
   };
 
@@ -139,11 +159,10 @@
 
   # Moonlander setup
   services.udev.extraRules = ''
-  KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
-  KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev"
-  SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666", SYMLINK+="stm32_dfu"
+    KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
+    KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev"
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666", SYMLINK+="stm32_dfu"
   '';
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
