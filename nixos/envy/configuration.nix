@@ -11,7 +11,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../config/common.nix
-    ../config/hyprland.nix
+    ../config/niri.nix
   ];
 
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
