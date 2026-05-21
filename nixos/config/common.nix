@@ -164,6 +164,14 @@
     KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
     KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev"
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666", SYMLINK+="stm32_dfu"
+    # Logitech C920 webcam — disable USB autosuspend; resume races wedge the
+    # USB mutex and hang wireplumber's audio enumeration.
+    SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="08e5", ATTR{power/control}="on"
+    # MSI monitor USB KVM (VIA Labs hub) and daisy-chained Genesys hub: keep
+    # the hubs awake so KVM input switches don't race autosuspend wake-up with
+    # re-enumeration of the 6+ devices behind them.
+    SUBSYSTEM=="usb", ATTR{idVendor}=="2109", ATTR{idProduct}=="2211", ATTR{power/control}="on"
+    SUBSYSTEM=="usb", ATTR{idVendor}=="05e3", ATTR{idProduct}=="0610", ATTR{power/control}="on"
   '';
 
   # Some programs need SUID wrappers, can be configured further or are
