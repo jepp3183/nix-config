@@ -26,6 +26,11 @@
     modesetting.enable = true;
     nvidiaSettings = true;
     powerManagement.enable = true;
+    # 595.71.05 (current `stable`/`production` in this nixpkgs pin) misfires DRM
+    # vblank events on Wayland, which makes niri throttle to ~60Hz despite
+    # negotiating 144/240. 580.142 is the previous LTS branch and the most
+    # widely-deployed open-module driver.
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
   };
 
   # Fix niri vblank throttling on NVIDIA: pin PowerMizer to max so the GPU
