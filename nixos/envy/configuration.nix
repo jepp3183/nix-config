@@ -19,6 +19,8 @@
   # Enable networking
   networking.hostName = "nixos-envy"; # Define your hostname.
 
+  programs.kdeconnect.enable = true;
+
   hardware.graphics.enable = true;
   services.acpid = {
     enable = true;
