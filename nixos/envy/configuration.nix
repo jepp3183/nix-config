@@ -14,8 +14,6 @@
     ../config/niri.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
-
   # Enable networking
   networking.hostName = "nixos-envy"; # Define your hostname.
 
