@@ -15,6 +15,7 @@
 
   environment.systemPackages = with pkgs; [
     streamdeck-ui
+    dnsmasq
   ];
 
   hardware.graphics = {
@@ -64,6 +65,13 @@
       }
     ];
   };
+
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+
+  users.users.jeppe.extraGroups = [
+    "libvirtd"
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
